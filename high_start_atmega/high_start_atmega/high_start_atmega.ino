@@ -85,6 +85,7 @@ void loop() {
   dataString += String(gz) + "\t"; 
 
   dataFile.println(dataString);
+  dataFile.flush();
 
   // print to the serial port too:
   Serial.println(dataString);
