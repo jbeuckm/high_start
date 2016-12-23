@@ -50,30 +50,26 @@ void setup() {
     while (1) ;
   }
   Serial.println("card initialized.");
+
+  String filename = "tracking.tsv";
   
-  dataFile = SD.open("datalog.tsv", FILE_WRITE);
+  dataFile = SD.open(filename, FILE_WRITE);
   if (! dataFile) {
-    Serial.println("error opening datalog.txt");
+    Serial.println("error opening "+filename);
     // Wait forever since we cant write data
     while (1) ;
   }
 
-      String dataString = "millis\t";
-
-  dataString += "ax\t"; 
-  dataString += "ay\t"; 
-  dataString += "az\t"; 
-  dataString += "gx\t"; 
-  dataString += "gy\t"; 
-  dataString += "gz\t"; 
-
+  String dataString = "millis\tax\tay\taz\tgx\tgy\tgz\t"; 
   dataFile.println(dataString);
-        Serial.println(dataString);
+  
+  Serial.println("starting TSV file write with columns...");
+  Serial.println(dataString);
 }
 
 void loop() {
 
-    accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
+  accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
 
   String dataString = String(millis()) + "\t";
 
@@ -91,9 +87,9 @@ void loop() {
   Serial.println(dataString);
 
   
-    myservo.write(ay >> 7);
-    pos += dir;
-    if ((dir == 1) && (pos >= 180)) dir = -1;
-    else if ((dir == -1) && (pos <= 0)) dir = 1;
+  myservo.write(ay >> 7);
+  pos += dir;
+  if ((dir == 1) && (pos >= 180)) dir = -1;
+  else if ((dir == -1) && (pos <= 0)) dir = 1;
 
 }

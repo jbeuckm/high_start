@@ -1,0 +1,27 @@
+{
+  "name": "high_start_analyzer",
+  "homepage": "https://github.com/jbeuckm/high_start",
+  "authors": [
+    "Joe Beuckman <joebeuckman@gmail.com>"
+  ],
+  "description": "Display etlemetry from the high start rocket project.",
+  "main": "index.html",
+  "keywords": [
+    "rocketry",
+    "balloon",
+    "arduino",
+    "telemetry"
+  ],
+  "license": "NO LICENSE",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "d3": "^4.4.0"
+  }
+}

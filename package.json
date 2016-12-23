@@ -1,0 +1,23 @@
+{
+  "name": "high_start",
+  "version": "1.0.0",
+  "description": "I2Cdev and MPU6050 libraries: https://github.com/jrowberg/i2cdevlib/tree/master/Arduino",
+  "main": "test-server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jbeuckm/high_start.git"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/jbeuckm/high_start/issues"
+  },
+  "homepage": "https://github.com/jbeuckm/high_start",
+  "devDependencies": {
+    "connect": "^3.5.0",
+    "serve-static": "^1.11.1"
+  }
+}
