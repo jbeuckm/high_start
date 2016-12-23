@@ -78,7 +78,7 @@ void loop() {
   dataString += String(az) + "\t"; 
   dataString += String(gx) + "\t"; 
   dataString += String(gy) + "\t"; 
-  dataString += String(gz) + "\t"; 
+  dataString += String(gz); 
 
   dataFile.println(dataString);
   dataFile.flush();
