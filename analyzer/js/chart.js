@@ -15,7 +15,7 @@ var xScale = d3.scaleLinear().range([0, width]),
     zScale = d3.scaleOrdinal(d3.schemeCategory10);
 
 var line = d3.line()
-    .curve(d3.curveBasis)
+//    .curve(d3.curveBasis)
     .x(function (d) {
         return xScale(d.millis);
     })
@@ -26,7 +26,7 @@ var line = d3.line()
 d3.tsv("../data/TRACKING.TSV", type, function (error, data) {
     if (error) throw error;
 
-    var cities = data.columns.slice(1).map(function (id) {
+    var columns = data.columns.slice(1).map(function (id) {
         return {
             id: id,
             values: data.map(function (d) {
@@ -37,58 +37,62 @@ d3.tsv("../data/TRACKING.TSV", type, function (error, data) {
             })
         };
     });
-    console.log(cities);
+    console.log(columns);
     xScale.domain(d3.extent(data, function (d) {
         return +d.millis;
     }));
 
     yScale.domain([
-    d3.min(cities, function (c) {
+    d3.min(columns, function (c) {
             return d3.min(c.values, function (d) {
                 return d.reading;
             });
         }),
-    d3.max(cities, function (c) {
+    d3.max(columns, function (c) {
             return d3.max(c.values, function (d) {
                 return d.reading;
             });
         })
   ]);
 
-    zScale.domain(cities.map(function (c) {
+    zScale.domain(columns.map(function (c) {
         return c.id;
     }));
 
     var zoom = d3.zoom()
-    .scaleExtent([1, 40])
-    .translateExtent([[-100, -100], [width + 90, height + 100]])
-    .on("zoom", zoomed);
-    
+        .scaleExtent([1, 40])
+        .translateExtent([[-100, -100], [width + 90, height + 100]])
+        .on("zoom", zoomed);
+
     svg.call(zoom);
-    
+
     xAxis = d3.axisBottom(xScale);
+    xAxis.tickFormat(function(val){
+        return (val/1000) + "s"
+    });
     gX = g.append("g")
         .attr("class", "axis axis--x")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
+    
 
     yAxis = d3.axisLeft(yScale);
     gY = g.append("g")
         .attr("class", "axis axis--y")
-        .call(yAxis)
-        .append("text")
+        .call(yAxis);
+    gY.append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", 6)
         .attr("dy", "0.71em")
         .attr("fill", "#000")
         .text("Reading");
 
-    var city = g.selectAll(".city")
-        .data(cities)
+    series = g.selectAll(".series")
+        .data(columns)
         .enter().append("g")
-        .attr("class", "city");
+        .attr("class", "series");
 
-    city.append("path")
+    series.append("path")
         .attr("class", "line")
         .attr("d", function (d) {
             return line(d.values);
@@ -97,7 +101,7 @@ d3.tsv("../data/TRACKING.TSV", type, function (error, data) {
             return zScale(d.id);
         });
 
-    city.append("text")
+    series.append("text")
         .datum(function (d) {
             return {
                 id: d.id,
@@ -123,9 +127,16 @@ function type(d, _, columns) {
     return d;
 }
 
+var x_zoom = true;
 
 function zoomed() {
-//  view.attr("transform", d3.event.transform);
-  gX.call(xAxis.scale(d3.event.transform.rescaleX(xScale)));
-  gY.call(yAxis.scale(d3.event.transform.rescaleY(yScale)));
+  if(x_zoom) {
+    series.attr("transform", "translate(" + d3.event.transform.x + ",0) scale(" + d3.event.transform.k + ", 1)");
+  }
+  else if(y_zoom) {
+    series.attr("transform", "scale(1, " + d3.event.transform.k + ")");
+  }
+    
+//    gY.call(yAxis.scale(d3.event.transform.rescaleY(yScale)));
+    gX.call(xAxis.scale(d3.event.transform.rescaleX(xScale)));
 }
