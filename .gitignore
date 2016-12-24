@@ -1,3 +1,4 @@
+.DS_Store
 data
 analyzer/bower_components
 node_modules
