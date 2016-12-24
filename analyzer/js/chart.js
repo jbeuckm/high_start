@@ -10,17 +10,17 @@ var svg = d3.select("svg"),
     g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
-var x = d3.scaleLinear().range([0, width]),
-    y = d3.scaleLinear().range([height, 0]),
-    z = d3.scaleOrdinal(d3.schemeCategory10);
+var xScale = d3.scaleLinear().range([0, width]),
+    yScale = d3.scaleLinear().range([height, 0]),
+    zScale = d3.scaleOrdinal(d3.schemeCategory10);
 
 var line = d3.line()
     .curve(d3.curveBasis)
     .x(function (d) {
-        return x(d.millis);
+        return xScale(d.millis);
     })
     .y(function (d) {
-        return y(d.reading);
+        return yScale(d.reading);
     });
 
 d3.tsv("../data/TRACKING.TSV", type, function (error, data) {
@@ -38,11 +38,11 @@ d3.tsv("../data/TRACKING.TSV", type, function (error, data) {
         };
     });
     console.log(cities);
-    x.domain(d3.extent(data, function (d) {
+    xScale.domain(d3.extent(data, function (d) {
         return +d.millis;
     }));
 
-    y.domain([
+    yScale.domain([
     d3.min(cities, function (c) {
             return d3.min(c.values, function (d) {
                 return d.reading;
@@ -55,18 +55,27 @@ d3.tsv("../data/TRACKING.TSV", type, function (error, data) {
         })
   ]);
 
-    z.domain(cities.map(function (c) {
+    zScale.domain(cities.map(function (c) {
         return c.id;
     }));
 
-    g.append("g")
+    var zoom = d3.zoom()
+    .scaleExtent([1, 40])
+    .translateExtent([[-100, -100], [width + 90, height + 100]])
+    .on("zoom", zoomed);
+    
+    svg.call(zoom);
+    
+    xAxis = d3.axisBottom(xScale);
+    gX = g.append("g")
         .attr("class", "axis axis--x")
         .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x));
+        .call(xAxis);
 
-    g.append("g")
+    yAxis = d3.axisLeft(yScale);
+    gY = g.append("g")
         .attr("class", "axis axis--y")
-        .call(d3.axisLeft(y))
+        .call(yAxis)
         .append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", 6)
@@ -85,7 +94,7 @@ d3.tsv("../data/TRACKING.TSV", type, function (error, data) {
             return line(d.values);
         })
         .style("stroke", function (d) {
-            return z(d.id);
+            return zScale(d.id);
         });
 
     city.append("text")
@@ -96,7 +105,7 @@ d3.tsv("../data/TRACKING.TSV", type, function (error, data) {
             };
         })
         .attr("transform", function (d) {
-            return "translate(" + x(d.value.millis) + "," + y(d.value.reading) + ")";
+            return "translate(" + xScale(d.value.millis) + "," + yScale(d.value.reading) + ")";
         })
         .attr("x", 3)
         .attr("dy", "0.35em")
@@ -112,4 +121,11 @@ function type(d, _, columns) {
         d[c = columns[i]] = +d[c];
     }
     return d;
+}
+
+
+function zoomed() {
+//  view.attr("transform", d3.event.transform);
+  gX.call(xAxis.scale(d3.event.transform.rescaleX(xScale)));
+  gY.call(yAxis.scale(d3.event.transform.rescaleY(yScale)));
 }

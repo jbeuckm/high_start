@@ -24,27 +24,19 @@ int dir = 1;
 const int chipSelect = 13;
 File dataFile;
 
-void setup() {
-  Serial.begin(38400);
 
-
-  // join I2C bus (I2Cdev library doesn't do this automatically)
-  #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
-        Wire.begin();
-  #elif I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_FASTWIRE
-        Fastwire::setup(400, true);
-        Serial.println("Fastwire");
-  #endif
-
-  Serial.println("Initializing I2C devices...");
+void setupAccelGyro() {
   accelgyro.initialize();
 
   Serial.println("Testing device connections...");
   Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
+}
 
-  myservo.attach(9);
+void setupServos() {
+  myservo.attach(9);  
+}
 
-
+void setupSDcard() {
   Serial.print("Initializing SD card...");
   pinMode(SS, OUTPUT);
   
@@ -71,10 +63,29 @@ void setup() {
   Serial.println(dataString);
 }
 
-void loop() {
 
-  accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
+void setup() {
+  Serial.begin(38400);
 
+  Serial.println("Initializing I2C devices...");
+
+  // join I2C bus (I2Cdev library doesn't do this automatically)
+  #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
+        Wire.begin();
+  #elif I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_FASTWIRE
+        Fastwire::setup(400, true);
+        Serial.println("Fastwire");
+  #endif
+
+  setupAccelGyro();
+
+  setupServos();
+
+  setupSDcard();
+}
+
+void writeSDcardData() {
+  
   String dataString = String(millis()) + "\t";
 
   dataString += String(ax) + "\t"; 
@@ -90,10 +101,26 @@ void loop() {
   // print to the serial port too:
   Serial.println(dataString);
 
+}
+
+void updateServos() {
   
   myservo.write(ay >> 7);
   pos += dir;
   if ((dir == 1) && (pos >= 180)) dir = -1;
   else if ((dir == -1) && (pos <= 0)) dir = 1;
+  
+}
+
+
+
+void loop() {
+
+  accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
+
+  updateServos();
+
+  writeSDcardData();
 
 }
+

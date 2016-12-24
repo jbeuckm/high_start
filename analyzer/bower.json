@@ -22,7 +22,6 @@
     "tests"
   ],
   "dependencies": {
-    "d3": "^4.4.0",
     "angular": "angularjs#^1.6.1"
   }
 }
