@@ -15,18 +15,18 @@ var xScale = d3.scaleLinear().range([0, width]),
     zScale = d3.scaleOrdinal(d3.schemeCategory10);
 
 var line = d3.line()
-//    .curve(d3.curveBasis)
     .x(function (d) {
         return xScale(d.millis);
     })
     .y(function (d) {
         return yScale(d.reading);
     });
+var series, redraw, columns;
 
 d3.tsv("../data/TRACKING.TSV", type, function (error, data) {
     if (error) throw error;
 
-    var columns = data.columns.slice(1).map(function (id) {
+    columns = data.columns.slice(1).map(function (id) {
         return {
             id: id,
             values: data.map(function (d) {
@@ -37,7 +37,7 @@ d3.tsv("../data/TRACKING.TSV", type, function (error, data) {
             })
         };
     });
-    console.log(columns);
+
     xScale.domain(d3.extent(data, function (d) {
         return +d.millis;
     }));
@@ -55,26 +55,28 @@ d3.tsv("../data/TRACKING.TSV", type, function (error, data) {
         })
   ]);
 
-    zScale.domain(columns.map(function (c) {
+    var seriesNames = columns.map(function (c) {
         return c.id;
-    }));
+    });
+
+    zScale.domain(seriesNames);
 
     var zoom = d3.zoom()
         .scaleExtent([1, 40])
-        .translateExtent([[-100, -100], [width + 90, height + 100]])
+        .translateExtent([[0, -100], [width + 90, height + 100]])
         .on("zoom", zoomed);
 
     svg.call(zoom);
 
     xAxis = d3.axisBottom(xScale);
-    xAxis.tickFormat(function(val){
-        return (val/1000) + "s"
+    xAxis.tickFormat(function (val) {
+        return (val / 1000) + "s"
     });
     gX = g.append("g")
         .attr("class", "axis axis--x")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
-    
+
 
     yAxis = d3.axisLeft(yScale);
     gY = g.append("g")
@@ -87,20 +89,24 @@ d3.tsv("../data/TRACKING.TSV", type, function (error, data) {
         .attr("fill", "#000")
         .text("Reading");
 
-    series = g.selectAll(".series")
-        .data(columns)
-        .enter().append("g")
-        .attr("class", "series");
+    redraw = function () {
 
-    series.append("path")
-        .attr("class", "line")
-        .attr("d", function (d) {
-            return line(d.values);
-        })
-        .style("stroke", function (d) {
-            return zScale(d.id);
-        });
+        series = g.selectAll(".series")
+            .data(columns)
+            .enter().append("g")
+            .attr("class", "series");
 
+        series.append("path")
+            .attr("class", "line")
+            .attr("d", function (d) {
+                return line(d.values);
+            })
+            .style("stroke", function (d) {
+                return zScale(d.id);
+            });
+    };
+    redraw();
+/*
     series.append("text")
         .datum(function (d) {
             return {
@@ -117,6 +123,39 @@ d3.tsv("../data/TRACKING.TSV", type, function (error, data) {
         .text(function (d) {
             return d.id;
         });
+*/
+    // draw legend
+    var legend = svg.append("g")
+        .attr("class", "legend")
+        .attr("transform", "translate("+width - 40+",30)")
+
+    // draw legend colored rectangles
+    var legendRows = legend.selectAll(".legend-row")
+        .data(seriesNames)
+        .enter()
+        .append("g")
+        .attr("class", "legend-row")
+        .attr("transform", function(d, i){
+            return "translate(80, "+(20+(i * 22))+")";
+        })
+
+    legendRows
+        .append("rect")
+        .attr("width", 18)
+        .attr("height", 18)
+        .style("fill", zScale)
+
+    legendRows
+        .append("text")
+        .attr("x", 25)
+        .attr("dy", "1.35em")
+        .style("font", "10px sans-serif")
+        .text(function (d) {
+        console.log(d);
+            return d;
+        })
+//        .attr('dx', '30px');
+
 });
 
 function type(d, _, columns) {
@@ -130,13 +169,15 @@ function type(d, _, columns) {
 var x_zoom = true;
 
 function zoomed() {
-  if(x_zoom) {
-    series.attr("transform", "translate(" + d3.event.transform.x + ",0) scale(" + d3.event.transform.k + ", 1)");
-  }
-  else if(y_zoom) {
-    series.attr("transform", "scale(1, " + d3.event.transform.k + ")");
-  }
     
-//    gY.call(yAxis.scale(d3.event.transform.rescaleY(yScale)));
+    if (x_zoom) {
+        series.attr("transform", "translate(" + d3.event.transform.x + ",0) scale(" + d3.event.transform.k + ", 1)");
+    } else if (y_zoom) {
+        series.attr("transform", "scale(1, " + d3.event.transform.k + ")");
+    }
+
+    //    gY.call(yAxis.scale(d3.event.transform.rescaleY(yScale)));
     gX.call(xAxis.scale(d3.event.transform.rescaleX(xScale)));
+
+//    redraw();
 }
