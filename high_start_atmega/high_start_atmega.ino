@@ -1,6 +1,6 @@
 #include <PID_v1.h>
 
-#include <Adafruit_GPS.h>
+//#include <Adafruit_GPS.h>
 
 #include "I2Cdev.h"
 #include "MPU6050.h"
@@ -49,8 +49,8 @@ void setupServos() {
   ySetpoint = 0;
   yPID.SetMode(AUTOMATIC);
   
-  xServo.attach(9);
-  yServo.attach(10);
+  xServo.attach(8);
+  yServo.attach(9);
 }
 
 void setupSDcard() {
@@ -66,7 +66,8 @@ void setupSDcard() {
 
   String filename = "tracking.tsv";
   
-  dataFile = SD.open(filename, O_WRITE | O_CREAT | O_TRUNC);
+//  dataFile = SD.open(filename, O_WRITE | O_CREAT | O_TRUNC);
+  dataFile = SD.open(filename, FILE_WRITE);
   if (! dataFile) {
     Serial.println("error opening "+filename);
     // Wait forever since we cant write data
