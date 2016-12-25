@@ -12,11 +12,14 @@ var svg = d3.select("svg"),
 
 var xScale = d3.scaleLinear().range([0, width]),
     yScale = d3.scaleLinear().range([height, 0]),
-    zScale = d3.scaleOrdinal(d3.schemeCategory10);
+    colorScale = d3.scaleOrdinal(d3.schemeCategory10);
+
+
+var zoomTransform = d3.zoomIdentity;
 
 var line = d3.line()
     .x(function (d) {
-        return xScale(d.millis);
+        return zoomTransform.rescaleX(xScale)(d.millis);
     })
     .y(function (d) {
         return yScale(d.reading);
@@ -59,7 +62,7 @@ d3.tsv("../data/TRACKING.TSV", type, function (error, data) {
         return c.id;
     });
 
-    zScale.domain(seriesNames);
+    colorScale.domain(seriesNames);
 
     var zoom = d3.zoom()
         .scaleExtent([1, 40])
@@ -89,45 +92,37 @@ d3.tsv("../data/TRACKING.TSV", type, function (error, data) {
         .attr("fill", "#000")
         .text("Reading");
 
+    series = g.selectAll(".series")
+        .data(columns)
+        .enter().append("g")
+        .attr("class", "series");
+
+    series.append("path")
+        .attr("class", "line")
+        .attr("d", function (d) {
+            return line(d.values);
+        })
+        .style("stroke", function (d) {
+            return colorScale(d.id);
+        });
+
     redraw = function () {
 
-        series = g.selectAll(".series")
-            .data(columns)
-            .enter().append("g")
-            .attr("class", "series");
-
-        series.append("path")
-            .attr("class", "line")
+        line.x(function (d) {
+            return zoomTransform.rescaleX(xScale)(d.millis);
+        })
+        
+        series.select(".line") // change the line
             .attr("d", function (d) {
                 return line(d.values);
-            })
-            .style("stroke", function (d) {
-                return zScale(d.id);
             });
-    };
-    redraw();
-/*
-    series.append("text")
-        .datum(function (d) {
-            return {
-                id: d.id,
-                value: d.values[d.values.length - 1]
-            };
-        })
-        .attr("transform", function (d) {
-            return "translate(" + xScale(d.value.millis) + "," + yScale(d.value.reading) + ")";
-        })
-        .attr("x", 3)
-        .attr("dy", "0.35em")
-        .style("font", "10px sans-serif")
-        .text(function (d) {
-            return d.id;
-        });
-*/
+    }
+
+
     // draw legend
     var legend = svg.append("g")
         .attr("class", "legend")
-        .attr("transform", "translate("+width - 40+",30)")
+        .attr("transform", "translate(" + width - 40 + ",30)")
 
     // draw legend colored rectangles
     var legendRows = legend.selectAll(".legend-row")
@@ -135,15 +130,15 @@ d3.tsv("../data/TRACKING.TSV", type, function (error, data) {
         .enter()
         .append("g")
         .attr("class", "legend-row")
-        .attr("transform", function(d, i){
-            return "translate(80, "+(20+(i * 22))+")";
+        .attr("transform", function (d, i) {
+            return "translate(80, " + (20 + (i * 22)) + ")";
         })
 
     legendRows
         .append("rect")
         .attr("width", 18)
         .attr("height", 18)
-        .style("fill", zScale)
+        .style("fill", colorScale)
 
     legendRows
         .append("text")
@@ -151,12 +146,12 @@ d3.tsv("../data/TRACKING.TSV", type, function (error, data) {
         .attr("dy", "1.35em")
         .style("font", "10px sans-serif")
         .text(function (d) {
-        console.log(d);
+            console.log(d);
             return d;
         })
-//        .attr('dx', '30px');
 
 });
+
 
 function type(d, _, columns) {
 
@@ -169,15 +164,10 @@ function type(d, _, columns) {
 var x_zoom = true;
 
 function zoomed() {
+
+    zoomTransform = d3.event.transform;
     
-    if (x_zoom) {
-        series.attr("transform", "translate(" + d3.event.transform.x + ",0) scale(" + d3.event.transform.k + ", 1)");
-    } else if (y_zoom) {
-        series.attr("transform", "scale(1, " + d3.event.transform.k + ")");
-    }
+    gX.call(xAxis.scale(zoomTransform.rescaleX(xScale)));
 
-    //    gY.call(yAxis.scale(d3.event.transform.rescaleY(yScale)));
-    gX.call(xAxis.scale(d3.event.transform.rescaleX(xScale)));
-
-//    redraw();
+    redraw();
 }
