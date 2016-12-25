@@ -146,7 +146,6 @@ d3.tsv("../data/TRACKING.TSV", type, function (error, data) {
         .attr("dy", "1.35em")
         .style("font", "10px sans-serif")
         .text(function (d) {
-            console.log(d);
             return d;
         })
 
