@@ -33,19 +33,19 @@ Servo xServo;
 Servo yServo;
 
 double xSetpoint, xInput, xOutput;
-PID xPID(&xInput, &xOutput, &xSetpoint,2,5,1, DIRECT);
+PID xPID(&xInput, &xOutput, &xSetpoint, 2,5,1, DIRECT);
 
 double ySetpoint, yInput, yOutput;
-PID yPID(&yInput, &yOutput, &ySetpoint,2,5,1, DIRECT);
+PID yPID(&yInput, &yOutput, &ySetpoint, 2,5,1, DIRECT);
 
 
 void setupServos() {
   
-  xInput = analogRead(0);
+  xInput = ax;
   xSetpoint = 0;
   xPID.SetMode(AUTOMATIC);
   
-  yInput = analogRead(0);
+  yInput = ay;
   ySetpoint = 0;
   yPID.SetMode(AUTOMATIC);
   
@@ -73,7 +73,7 @@ void setupSDcard() {
     while (1) ;
   }
 
-  String dataString = "millis\tax\tay\taz\tgx\tgy\tgz\t"; 
+  String dataString = "millis\tax\tay\taz\tgx\tgy\tgz\t\txServo\tyServo"; 
   dataFile.println(dataString);
   
   Serial.println("starting TSV file write with columns...");
@@ -96,6 +96,8 @@ void setup() {
 
   setupAccelGyro();
 
+  accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
+
   setupServos();
 
   setupSDcard();
@@ -110,7 +112,10 @@ void writeSDcardData() {
   dataString += String(az) + "\t"; 
   dataString += String(gx) + "\t"; 
   dataString += String(gy) + "\t"; 
-  dataString += String(gz); 
+  dataString += String(gz) + "\t"; 
+
+  dataString += String(xOutput) + "\t"; 
+  dataString += String(yOutput); 
 
   dataFile.println(dataString);
   dataFile.flush();
