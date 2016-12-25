@@ -1,28 +1,12 @@
-<!DOCTYPE html>
-
-<html>
-
-<head>
-    <title>Example 05.07 - Basic 3D geometries - Cylinder</title>
-    <script type="text/javascript" src="bower_components/threejs/build/three.min.js"></script>
-
-    <style>
-        body {
-            /* set margin to 0 and overflow to hidden, to go fullscreen */
-            margin: 0;
-            overflow: hidden;
-        }
-    </style>
-</head>
-
-<body>
-
-    <div id="WebGL-output">
-    </div>
-
-    <script type="text/javascript">
-        function init() {
-
+angular.module('high-start').directive('threeView', function(){
+    
+  return {
+    restrict: 'E',
+      replace: true,
+    scope: {
+      title: '@'
+    },
+    link: function(scope, element, attrs, tabsCtrl) {
             var scene = new THREE.Scene();
 
             var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -45,7 +29,7 @@
             camera.position.z = 50;
             camera.lookAt(new THREE.Vector3(10, 0, 0));
 
-            document.getElementById("WebGL-output").appendChild(webGLRenderer.domElement);
+            element[0].appendChild(webGLRenderer.domElement);
 
             var step = 0;
 
@@ -59,10 +43,8 @@
                 requestAnimationFrame(render);
                 webGLRenderer.render(scene, camera);
             }
-
-        }
-        window.onload = init;
-    </script>
-</body>
-
-</html>
+    },
+    template: '<div></div>'
+  };    
+    
+});
