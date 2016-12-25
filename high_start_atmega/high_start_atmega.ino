@@ -66,15 +66,15 @@ void setupSDcard() {
 
   String filename = "tracking.tsv";
   
-//  dataFile = SD.open(filename, O_WRITE | O_CREAT | O_TRUNC);
-  dataFile = SD.open(filename, FILE_WRITE);
+  dataFile = SD.open(filename, O_WRITE | O_CREAT | O_TRUNC);
+//  dataFile = SD.open(filename, FILE_WRITE);
   if (! dataFile) {
     Serial.println("error opening "+filename);
     // Wait forever since we cant write data
     while (1) ;
   }
 
-  String dataString = "millis\tax\tay\taz\tgx\tgy\tgz\t\txServo\tyServo"; 
+  String dataString = "millis\tax\tay\taz\tgx\tgy\tgz\txServo\tyServo"; 
   dataFile.println(dataString);
   
   Serial.println("starting TSV file write with columns...");
