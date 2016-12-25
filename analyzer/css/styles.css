@@ -8,3 +8,9 @@
     stroke-width: 0.5px;
 }
 
+.overlay {
+    left: 0;
+    position: absolute;
+    background-color: transparent;
+    z-index: 1000;
+}

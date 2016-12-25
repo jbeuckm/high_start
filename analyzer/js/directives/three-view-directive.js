@@ -2,7 +2,6 @@ angular.module('high-start').directive('threeView', function(){
     
   return {
     restrict: 'E',
-      replace: true,
     scope: {
       title: '@'
     },
@@ -11,13 +10,13 @@ angular.module('high-start').directive('threeView', function(){
 
             var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-            var webGLRenderer = new THREE.WebGLRenderer();
+            var webGLRenderer = new THREE.WebGLRenderer({ alpha: true });
             webGLRenderer.setSize(window.innerWidth, window.innerHeight);
             webGLRenderer.shadowMapEnabled = true;
 
             
             var from = new THREE.Vector3(2, 2, 2);
-            var to = new THREE.Vector3(30, 30, 30);
+            var to = new THREE.Vector3(10, 10, 10);
             var direction = to.clone().sub(from);
             var length = direction.length();
             var arrowHelper = new THREE.ArrowHelper(direction.normalize(), from, length, 0xff0000);
@@ -37,14 +36,13 @@ angular.module('high-start').directive('threeView', function(){
 
             function render() {
 
-                arrowHelper.rotation.y = step += 0.01;
+                arrowHelper.rotation.y = step += 0.05;
 
                 // render using requestAnimationFrame
                 requestAnimationFrame(render);
                 webGLRenderer.render(scene, camera);
             }
-    },
-    template: '<div></div>'
+    }
   };    
     
 });
