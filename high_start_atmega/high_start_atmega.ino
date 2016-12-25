@@ -17,10 +17,6 @@ MPU6050 accelgyro;
 int16_t ax, ay, az;
 int16_t gx, gy, gz;
 
-Servo myservo;
-int pos = 0;
-int dir = 1;
-
 const int chipSelect = 13;
 File dataFile;
 
@@ -32,8 +28,29 @@ void setupAccelGyro() {
   Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
 }
 
+
+Servo xServo;
+Servo yServo;
+
+double xSetpoint, xInput, xOutput;
+PID xPID(&xInput, &xOutput, &xSetpoint,2,5,1, DIRECT);
+
+double ySetpoint, yInput, yOutput;
+PID yPID(&yInput, &yOutput, &ySetpoint,2,5,1, DIRECT);
+
+
 void setupServos() {
-  myservo.attach(9);  
+  
+  xInput = analogRead(0);
+  xSetpoint = 0;
+  xPID.SetMode(AUTOMATIC);
+  
+  yInput = analogRead(0);
+  ySetpoint = 0;
+  yPID.SetMode(AUTOMATIC);
+  
+  xServo.attach(9);
+  yServo.attach(10);
 }
 
 void setupSDcard() {
@@ -105,10 +122,13 @@ void writeSDcardData() {
 
 void updateServos() {
   
-  myservo.write(ay >> 7);
-  pos += dir;
-  if ((dir == 1) && (pos >= 180)) dir = -1;
-  else if ((dir == -1) && (pos <= 0)) dir = 1;
+  xInput = ax;
+  xPID.Compute();    
+  xServo.write(xOutput);
+  
+  yInput = ay;
+  yPID.Compute();    
+  yServo.write(yOutput);
   
 }
 
