@@ -1,7 +1,7 @@
-#include <PID_v1.h>
 
 //#include <Adafruit_GPS.h>
 
+#include <PID_v1.h>
 #include "I2Cdev.h"
 #include "MPU6050.h"
 #include <Servo.h>
@@ -26,6 +26,11 @@ void setupAccelGyro() {
 
   Serial.println("Testing device connections...");
   Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
+
+  accelgyro.setFullScaleAccelRange(MPU6050_ACCEL_FS_16);
+  accelgyro.setFullScaleGyroRange(MPU6050_GYRO_FS_2000);
+
+  accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
 }
 
 
@@ -33,20 +38,22 @@ Servo xServo;
 Servo yServo;
 
 double xSetpoint, xInput, xOutput;
-PID xPID(&xInput, &xOutput, &xSetpoint, 2,5,1, DIRECT);
+PID xPID(&xInput, &xOutput, &xSetpoint, .1,0,.01, DIRECT);
 
 double ySetpoint, yInput, yOutput;
-PID yPID(&yInput, &yOutput, &ySetpoint, 2,5,1, DIRECT);
+PID yPID(&yInput, &yOutput, &ySetpoint, .1,0,.01, DIRECT);
 
 
 void setupServos() {
   
   xInput = ax;
   xSetpoint = 0;
+  xPID.SetOutputLimits(0, 180);
   xPID.SetMode(AUTOMATIC);
   
   yInput = ay;
   ySetpoint = 0;
+  yPID.SetOutputLimits(0, 180);
   yPID.SetMode(AUTOMATIC);
   
   xServo.attach(8);
@@ -97,12 +104,12 @@ void setup() {
 
   setupAccelGyro();
 
-  accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
-
   setupServos();
 
   setupSDcard();
 }
+
+
 
 void writeSDcardData() {
   
