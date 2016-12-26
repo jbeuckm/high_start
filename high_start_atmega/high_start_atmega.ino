@@ -48,17 +48,27 @@ void setupServos() {
   
   xInput = ax;
   xSetpoint = 0;
-  xPID.SetOutputLimits(0, 180);
+  xPID.SetOutputLimits(-90, 90);
   xPID.SetMode(AUTOMATIC);
   
   yInput = ay;
   ySetpoint = 0;
-  yPID.SetOutputLimits(0, 180);
+  yPID.SetOutputLimits(-90, 90);
   yPID.SetMode(AUTOMATIC);
   
   xServo.attach(8);
   yServo.attach(9);
 }
+
+
+
+void dateTime(uint16_t* date, uint16_t* time) {
+
+  *date = FAT_DATE(2015, 12, 25);
+
+  *time = FAT_TIME(12, 0, 0);
+}
+
 
 void setupSDcard() {
   Serial.print("Initializing SD card...");
@@ -73,6 +83,7 @@ void setupSDcard() {
 
   String filename = "tracking.tsv";
   
+  SdFile::dateTimeCallback(dateTime);
   dataFile = SD.open(filename, O_WRITE | O_CREAT | O_TRUNC);
 //  dataFile = SD.open(filename, FILE_WRITE);
   if (! dataFile) {
@@ -137,11 +148,11 @@ void updateServos() {
   
   xInput = ax;
   xPID.Compute();    
-  xServo.write(xOutput);
+  xServo.write(90 + xOutput);
   
   yInput = ay;
   yPID.Compute();    
-  yServo.write(yOutput);
+  yServo.write(90 + yOutput);
   
 }
 
