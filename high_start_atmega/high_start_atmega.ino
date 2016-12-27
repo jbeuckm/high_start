@@ -1,5 +1,5 @@
-
-//#include <Adafruit_GPS.h>
+#include <TinyGPS.h>
+#include <SoftwareSerial.h>
 
 #include <PID_v1.h>
 #include "I2Cdev.h"
@@ -12,6 +12,9 @@
     #include "Wire.h"
 #endif
 
+TinyGPS gps;
+SoftwareSerial ss(2,3);
+
 MPU6050 accelgyro;
 
 int16_t ax, ay, az;
@@ -23,10 +26,10 @@ File dataFile;
 
 void setupAccelGyro() {
   accelgyro.initialize();
-
+/*
   Serial.println("Testing device connections...");
   Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
-
+*/
   accelgyro.setFullScaleAccelRange(MPU6050_ACCEL_FS_16);
   accelgyro.setFullScaleGyroRange(MPU6050_GYRO_FS_2000);
 
@@ -38,10 +41,10 @@ Servo xServo;
 Servo yServo;
 
 double xSetpoint, xInput, xOutput;
-PID xPID(&xInput, &xOutput, &xSetpoint, .1,0,.01, DIRECT);
+PID xPID(&xInput, &xOutput, &xSetpoint, .05, 0, .01, DIRECT);
 
 double ySetpoint, yInput, yOutput;
-PID yPID(&yInput, &yOutput, &ySetpoint, .1,0,.01, DIRECT);
+PID yPID(&yInput, &yOutput, &ySetpoint, .05, 0, .01, DIRECT);
 
 
 void setupServos() {
@@ -71,46 +74,41 @@ void dateTime(uint16_t* date, uint16_t* time) {
 
 
 void setupSDcard() {
-  Serial.print("Initializing SD card...");
+  Serial.println("Initting SD");
   pinMode(SS, OUTPUT);
   
   if (!SD.begin(chipSelect)) {
-    Serial.println("Card failed, or not present");
+    Serial.println("SD failed");
     // don't do anything more:
     while (1) ;
   }
-  Serial.println("card initialized.");
+  Serial.println("SD initted");
 
   String filename = "tracking.tsv";
   
   SdFile::dateTimeCallback(dateTime);
   dataFile = SD.open(filename, O_WRITE | O_CREAT | O_TRUNC);
-//  dataFile = SD.open(filename, FILE_WRITE);
+
   if (! dataFile) {
     Serial.println("error opening "+filename);
-    // Wait forever since we cant write data
     while (1) ;
   }
 
-  String dataString = "millis\tax\tay\taz\tgx\tgy\tgz\txServo\tyServo"; 
-  dataFile.println(dataString);
+  dataFile.println("millis\tax\tay\taz\tgx\tgy\tgz\txServo\tyServo");
   
-  Serial.println("starting TSV file write with columns...");
-  Serial.println(dataString);
+  Serial.println("TSV with columns:");
 }
 
 
 void setup() {
-  Serial.begin(38400);
 
-  Serial.println("Initializing I2C devices...");
+  Serial.begin(38400);
 
   // join I2C bus (I2Cdev library doesn't do this automatically)
   #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
         Wire.begin();
   #elif I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_FASTWIRE
         Fastwire::setup(400, true);
-        Serial.println("Fastwire");
   #endif
 
   setupAccelGyro();
@@ -124,24 +122,29 @@ void setup() {
 
 void writeSDcardData() {
   
-  String dataString = String(millis()) + "\t";
+  dataFile.print(String(millis()) + "\t");
+  Serial.print(String(millis()) + "\t");
 
-  dataString += String(ax) + "\t"; 
-  dataString += String(ay) + "\t"; 
-  dataString += String(az) + "\t"; 
-  dataString += String(gx) + "\t"; 
-  dataString += String(gy) + "\t"; 
-  dataString += String(gz) + "\t"; 
+  dataFile.print(String(ax) + "\t"); 
+  Serial.print(String(ax) + "\t"); 
+  dataFile.print(String(ay) + "\t"); 
+  Serial.print(String(ay) + "\t"); 
+  dataFile.print(String(az) + "\t"); 
+  Serial.print(String(az) + "\t"); 
+  dataFile.print(String(gx) + "\t"); 
+  Serial.print(String(gx) + "\t"); 
+  
+  dataFile.print(String(gy) + "\t"); 
+  Serial.print(String(gy) + "\t"); 
+  dataFile.print(String(gz) + "\t");
+  Serial.print(String(gz) + "\t");
 
-  dataString += String(xOutput) + "\t"; 
-  dataString += String(yOutput); 
+  dataFile.print(String(xOutput) + "\t");
+  Serial.print(String(xOutput) + "\t");
+  dataFile.println(String(yOutput));
+  Serial.println(String(yOutput));
 
-  dataFile.println(dataString);
   dataFile.flush();
-
-  // print to the serial port too:
-  Serial.println(dataString);
-
 }
 
 void updateServos() {
