@@ -1,5 +1,6 @@
 #include <TinyGPS.h>
 #include <SoftwareSerial.h>
+#include <avr/pgmspace.h>
 
 #include <PID_v1.h>
 #include "I2Cdev.h"
@@ -7,6 +8,7 @@
 #include <Servo.h>
 #include <SPI.h>
 #include <SD.h>
+
 
 #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
     #include "Wire.h"
@@ -26,10 +28,10 @@ File dataFile;
 
 void setupAccelGyro() {
   accelgyro.initialize();
-/*
-  Serial.println("Testing device connections...");
-  Serial.println(accelgyro.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
-*/
+
+  Serial.println(F("Testing device connections..."));
+  Serial.println(accelgyro.testConnection() ? F("MPU6050 connection successful") : F("MPU6050 connection failed"));
+
   accelgyro.setFullScaleAccelRange(MPU6050_ACCEL_FS_16);
   accelgyro.setFullScaleGyroRange(MPU6050_GYRO_FS_2000);
 
@@ -74,15 +76,15 @@ void dateTime(uint16_t* date, uint16_t* time) {
 
 
 void setupSDcard() {
-  Serial.println("Initting SD");
+  Serial.println(F("Initting SD..."));
   pinMode(SS, OUTPUT);
   
   if (!SD.begin(chipSelect)) {
-    Serial.println("SD failed");
+    Serial.println(F("SD init failed"));
     // don't do anything more:
     while (1) ;
   }
-  Serial.println("SD initted");
+  Serial.println(F("SD initted"));
 
   String filename = "tracking.tsv";
   
@@ -90,13 +92,15 @@ void setupSDcard() {
   dataFile = SD.open(filename, O_WRITE | O_CREAT | O_TRUNC);
 
   if (! dataFile) {
-    Serial.println("error opening "+filename);
+    Serial.print(F("error opening "));
+    Serial.println(filename);
     while (1) ;
   }
 
-  dataFile.println("millis\tax\tay\taz\tgx\tgy\tgz\txServo\tyServo");
+  dataFile.println(F("millis\tax\tay\taz\tgx\tgy\tgz\txServo\tyServo"));
   
-  Serial.println("TSV with columns:");
+  Serial.println(F("TSV with columns:"));
+  Serial.println(F("millis\tax\tay\taz\tgx\tgy\tgz\txServo\tyServo"));
 }
 
 
