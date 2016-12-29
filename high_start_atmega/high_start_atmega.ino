@@ -1,3 +1,5 @@
+#include <Adafruit_BMP280.h>
+
 #include <TinyGPS.h>
 #include <SoftwareSerial.h>
 #include <avr/pgmspace.h>
@@ -17,6 +19,8 @@
 TinyGPS gps;
 SoftwareSerial ss(2,3);
 
+Adafruit_BMP280 bmp;
+  
 MPU6050 accelgyro;
 
 int16_t ax, ay, az;
@@ -106,7 +110,7 @@ void setupSDcard() {
 
 void setup() {
 
-  Serial.begin(38400);
+  Serial.begin(9600);
 
   // join I2C bus (I2Cdev library doesn't do this automatically)
   #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
@@ -115,6 +119,12 @@ void setup() {
         Fastwire::setup(400, true);
   #endif
 
+  if (!bmp.begin()) {  
+    Serial.println("Could not find a valid BMP280 sensor, check wiring!");
+    while (1);
+  }
+
+ 
   setupAccelGyro();
 
   setupServos();
@@ -166,6 +176,9 @@ void updateServos() {
 
 
 void loop() {
+
+  bmp.readTemperature()
+  bmp.readPressure()
 
   accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
 
