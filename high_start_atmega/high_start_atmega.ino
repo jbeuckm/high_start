@@ -17,7 +17,7 @@
 #endif
 
 TinyGPS gps;
-SoftwareSerial ss(2,3);
+SoftwareSerial gpsSerial(2,3);
 
 Adafruit_BMP280 bmp;
   
@@ -111,6 +111,7 @@ void setupSDcard() {
 void setup() {
 
   Serial.begin(9600);
+  gpsSerial.begin(9600);
 
   // join I2C bus (I2Cdev library doesn't do this automatically)
   #if I2CDEV_IMPLEMENTATION == I2CDEV_ARDUINO_WIRE
@@ -118,12 +119,12 @@ void setup() {
   #elif I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_FASTWIRE
         Fastwire::setup(400, true);
   #endif
-
+/*
   if (!bmp.begin()) {  
     Serial.println("Could not find a valid BMP280 sensor, check wiring!");
     while (1);
   }
-
+*/
  
   setupAccelGyro();
 
@@ -185,6 +186,29 @@ void loop() {
   updateServos();
 
   writeSDcardData();
+
+  while (gpsSerial.available()) {
+    int c = gpsSerial.read();
+    if (gps.encode(c))
+    {
+long lat, lon;
+unsigned long fix_age, time, date, speed, course;
+unsigned long chars;
+unsigned short sentences, failed_checksum;
+ 
+// retrieves +/- lat/long in 100000ths of a degree
+gps.get_position(&lat, &lon, &fix_age);
+Serial.println(String(lat)+","+String(lon)); 
+// time in hhmmsscc, date in ddmmyy
+gps.get_datetime(&date, &time, &fix_age);
+ 
+// returns speed in 100ths of a knot
+speed = gps.speed();
+ 
+// course in 100ths of a degree
+course = gps.course();
+  }
+  }
 
 }
 
