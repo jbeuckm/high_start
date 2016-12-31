@@ -177,8 +177,8 @@ void updateServos() {
 
 void loop() {
 
-  bmp.readTemperature()
-  bmp.readPressure()
+  bmp.readTemperature();
+  bmp.readPressure();
 
   accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
 
