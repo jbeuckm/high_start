@@ -1,0 +1,17 @@
+.axis--x path {
+    display: none;
+}
+
+.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1px;
+}
+
+.overlay {
+    left: 0;
+    position: absolute;
+    background-color: transparent;
+    z-index: 1000;
+    pointer-events: none;
+}
