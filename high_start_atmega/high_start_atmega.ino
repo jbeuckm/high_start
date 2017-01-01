@@ -16,8 +16,10 @@
     #include "Wire.h"
 #endif
 
+
 TinyGPS gps;
 SoftwareSerial gpsSerial(2,3);
+
 
 Adafruit_BMP280 bmp;
   
@@ -70,12 +72,15 @@ void setupServos() {
 }
 
 
+unsigned long fix_age;
+int year;
+byte month, day, hour, minute, second, hundredths;
 
 void dateTime(uint16_t* date, uint16_t* time) {
 
-  *date = FAT_DATE(2015, 12, 25);
+  *date = FAT_DATE(year, month, day);
 
-  *time = FAT_TIME(12, 0, 0);
+  *time = FAT_TIME(hour, minute, second);
 }
 
 
@@ -115,14 +120,14 @@ void setupSDcard() {
     while (1) ;
   }
 
-  gpsDataFile.println(F("millis\tlat\tlon\taltitude\tspeed"));
+  gpsDataFile.println(F("millis\tsatellites\tlat\tlon\taltitude\tspeed"));
   
 }
 
 
 void setup() {
 
-  Serial.begin(9600);
+  Serial.begin(115200);
   gpsSerial.begin(9600);
 
   // join I2C bus (I2Cdev library doesn't do this automatically)
@@ -141,8 +146,6 @@ void setup() {
   setupAccelGyro();
 
   setupServos();
-
-  setupSDcard();
 }
 
 
@@ -180,9 +183,37 @@ void updateServos() {
   
 }
 
+enum MISSION_STATE {
+  WAIT_FOR_FIX,
+  BOOST,
+  COAST,
+  DROGUE,
+  RECOVERY,
+  LANDED
+};
+
+MISSION_STATE mission_state = WAIT_FOR_FIX;
+
+void checkGpsReady() {
+  
+  while (gpsSerial.available()) {
+    int c = gpsSerial.read();
+    if (gps.encode(c))
+    {
+       
+      gps.crack_datetime(&year, &month, &day, &hour, &minute, &second, &hundredths, &fix_age);
+
+      setupSDcard();
+      
+      Serial.println("GPS Fix");
+
+      mission_state = BOOST;
+    }
+  }
+}
 
 
-void checkGPS() {
+void updateGPS() {
   
   while (gpsSerial.available()) {
     int c = gpsSerial.read();
@@ -190,33 +221,48 @@ void checkGPS() {
     {
 
       float flat, flon;
-      unsigned long fix_age, time, date, speed, course;
+      unsigned long time, date, speed, course;
 
       gps.f_get_position(&flat, &flon, &fix_age);
 
-      String dataString = String(millis()) + "\t";
+      String dataString = String(millis()) + "\t" + gps.satellites() + "\t";
 
       dataString += String(flat)+"\t"+String(flon)+"\t";
       dataString += String(gps.f_altitude())+"\t"+String(gps.f_speed_mps());
       
       gpsDataFile.println(dataString);
+      gpsDataFile.flush();
       Serial.println(dataString);
-/*
-      int year;
-      byte month, day, hour, minute, second, hundredths;
-       
-      gps.crack_datetime(&year, &month, &day,
-        &hour, &minute, &second, &hundredths, &fix_age);
-*/
+
     }
     
   }
 }
 
+
 void loop() {
 
-  bmp.readTemperature();
-  bmp.readPressure();
+  switch (mission_state) {
+    case WAIT_FOR_FIX:
+      checkGpsReady();
+      break;
+    case BOOST:
+      boost_loop();
+      break;
+    case COAST:
+      break;
+    case DROGUE:
+      break;
+    case RECOVERY:
+      break;
+    case LANDED:
+      break;
+  }
+}
+
+void boost_loop() {
+
+//  bmp.readPressure();
 
   accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
 
@@ -224,7 +270,7 @@ void loop() {
 
   writeSDcardData();
 
-  checkGPS();
+  updateGPS();
 }
 
 
