@@ -194,18 +194,20 @@ void checkGPS() {
 
       gps.f_get_position(&flat, &flon, &fix_age);
 
-      String dataString = String(flat)+"\t"+String(flon)+"\t";
+      String dataString = String(millis()) + "\t";
+
+      dataString += String(flat)+"\t"+String(flon)+"\t";
       dataString += String(gps.f_altitude())+"\t"+String(gps.f_speed_mps());
       
       gpsDataFile.println(dataString);
       Serial.println(dataString);
-
+/*
       int year;
       byte month, day, hour, minute, second, hundredths;
        
       gps.crack_datetime(&year, &month, &day,
         &hour, &minute, &second, &hundredths, &fix_age);
-
+*/
     }
     
   }
