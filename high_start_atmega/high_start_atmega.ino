@@ -27,7 +27,7 @@ int16_t ax, ay, az;
 int16_t gx, gy, gz;
 
 const int chipSelect = 13;
-File dataFile;
+File gyroDataFile, gpsDataFile;
 
 
 void setupAccelGyro() {
@@ -90,21 +90,33 @@ void setupSDcard() {
   }
   Serial.println(F("SD initted"));
 
-  String filename = "tracking.tsv";
+  String gyrosFilename = F("gyros.tsv");
   
   SdFile::dateTimeCallback(dateTime);
-  dataFile = SD.open(filename, O_WRITE | O_CREAT | O_TRUNC);
+  gyroDataFile = SD.open(gyrosFilename, O_WRITE | O_CREAT | O_TRUNC);
 
-  if (! dataFile) {
+  if (!gyroDataFile) {
     Serial.print(F("error opening "));
-    Serial.println(filename);
+    Serial.println(gyrosFilename);
     while (1) ;
   }
 
-  dataFile.println(F("millis\tax\tay\taz\tgx\tgy\tgz\txServo\tyServo"));
+  gyroDataFile.println(F("millis\tax\tay\taz\tgx\tgy\tgz\txServo\tyServo"));
   
-  Serial.println(F("TSV with columns:"));
-  Serial.println(F("millis\tax\tay\taz\tgx\tgy\tgz\txServo\tyServo"));
+
+  String gpsFilename = F("gps.tsv");
+  
+  SdFile::dateTimeCallback(dateTime);
+  gpsDataFile = SD.open(gpsFilename, O_WRITE | O_CREAT | O_TRUNC);
+
+  if (!gpsDataFile) {
+    Serial.print(F("error opening "));
+    Serial.println(gpsFilename);
+    while (1) ;
+  }
+
+  gpsDataFile.println(F("millis\tlat\tlon\taltitude\tspeed"));
+  
 }
 
 
@@ -136,30 +148,24 @@ void setup() {
 
 
 void writeSDcardData() {
+
+  String dataString = String(millis()) + "\t";
+
+  dataString += String(ax) + "\t"; 
+  dataString += String(ay) + "\t"; 
+  dataString += String(az) + "\t"; 
+  dataString += String(gx) + "\t"; 
   
-  dataFile.print(String(millis()) + "\t");
-  Serial.print(String(millis()) + "\t");
+  dataString += String(gy) + "\t"; 
+  dataString += String(gz) + "\t";
 
-  dataFile.print(String(ax) + "\t"); 
-  Serial.print(String(ax) + "\t"); 
-  dataFile.print(String(ay) + "\t"); 
-  Serial.print(String(ay) + "\t"); 
-  dataFile.print(String(az) + "\t"); 
-  Serial.print(String(az) + "\t"); 
-  dataFile.print(String(gx) + "\t"); 
-  Serial.print(String(gx) + "\t"); 
-  
-  dataFile.print(String(gy) + "\t"); 
-  Serial.print(String(gy) + "\t"); 
-  dataFile.print(String(gz) + "\t");
-  Serial.print(String(gz) + "\t");
+  dataString += String(xOutput) + "\t";
+  dataString += String(yOutput);
 
-  dataFile.print(String(xOutput) + "\t");
-  Serial.print(String(xOutput) + "\t");
-  dataFile.println(String(yOutput));
-  Serial.println(String(yOutput));
+  gyroDataFile.println(dataString);
+  Serial.println(dataString);
 
-  dataFile.flush();
+  gyroDataFile.flush();
 }
 
 void updateServos() {
@@ -183,16 +189,16 @@ void checkGPS() {
     if (gps.encode(c))
     {
 
-      long lat, lon;
+      float flat, flon;
       unsigned long fix_age, time, date, speed, course;
-      unsigned long chars;
-      unsigned short sentences, failed_checksum;
-       
-      // retrieves +/- lat/long in 100000ths of a degree
-      gps.get_position(&lat, &lon, &fix_age);
-      Serial.println(String(lat)+","+String(lon)); 
 
-      Serial.println(String(gps.f_altitude()));
+      gps.f_get_position(&flat, &flon, &fix_age);
+
+      String dataString = String(flat)+"\t"+String(flon)+"\t";
+      dataString += String(gps.f_altitude())+"\t"+String(gps.f_speed_mps());
+      
+      gpsDataFile.println(dataString);
+      Serial.println(dataString);
 
       int year;
       byte month, day, hour, minute, second, hundredths;
