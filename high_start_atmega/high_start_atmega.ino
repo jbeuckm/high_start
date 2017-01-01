@@ -176,6 +176,35 @@ void updateServos() {
 
 
 
+void checkGPS() {
+  
+  while (gpsSerial.available()) {
+    int c = gpsSerial.read();
+    if (gps.encode(c))
+    {
+
+      long lat, lon;
+      unsigned long fix_age, time, date, speed, course;
+      unsigned long chars;
+      unsigned short sentences, failed_checksum;
+       
+      // retrieves +/- lat/long in 100000ths of a degree
+      gps.get_position(&lat, &lon, &fix_age);
+      Serial.println(String(lat)+","+String(lon)); 
+
+      Serial.println(String(gps.f_altitude()));
+
+      int year;
+      byte month, day, hour, minute, second, hundredths;
+       
+      gps.crack_datetime(&year, &month, &day,
+        &hour, &minute, &second, &hundredths, &fix_age);
+
+    }
+    
+  }
+}
+
 void loop() {
 
   bmp.readTemperature();
@@ -187,28 +216,9 @@ void loop() {
 
   writeSDcardData();
 
-  while (gpsSerial.available()) {
-    int c = gpsSerial.read();
-    if (gps.encode(c))
-    {
-long lat, lon;
-unsigned long fix_age, time, date, speed, course;
-unsigned long chars;
-unsigned short sentences, failed_checksum;
- 
-// retrieves +/- lat/long in 100000ths of a degree
-gps.get_position(&lat, &lon, &fix_age);
-Serial.println(String(lat)+","+String(lon)); 
-// time in hhmmsscc, date in ddmmyy
-gps.get_datetime(&date, &time, &fix_age);
- 
-// returns speed in 100ths of a knot
-speed = gps.speed();
- 
-// course in 100ths of a degree
-course = gps.course();
-  }
-  }
-
+  checkGPS();
 }
+
+
+
 
