@@ -15848,6 +15848,8 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 <part name="C4" library="rcl" deviceset="CPOL-US" device="B45181A" value="22u"/>
 <part name="P+6" library="supply1" deviceset="+5V" device=""/>
 <part name="GND8" library="supply1" deviceset="GND" device=""/>
+<part name="BATTERY" library="con-molex" deviceset="22-23-2021" device=""/>
+<part name="GND9" library="supply1" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -15928,10 +15930,13 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 <instance part="P+5" gate="1" x="68.58" y="63.5"/>
 <instance part="GND7" gate="1" x="68.58" y="45.72"/>
 <instance part="IC1" gate="A1" x="134.62" y="30.48"/>
-<instance part="SUPPLY2" gate="G$1" x="116.84" y="38.1"/>
+<instance part="SUPPLY2" gate="G$1" x="114.3" y="38.1"/>
 <instance part="C4" gate="G$1" x="152.4" y="22.86"/>
 <instance part="P+6" gate="1" x="152.4" y="38.1"/>
 <instance part="GND8" gate="1" x="134.62" y="10.16"/>
+<instance part="BATTERY" gate="-1" x="119.38" y="20.32" rot="MR180"/>
+<instance part="BATTERY" gate="-2" x="119.38" y="22.86" rot="MR180"/>
+<instance part="GND9" gate="1" x="114.3" y="10.16"/>
 </instances>
 <busses>
 </busses>
@@ -16153,6 +16158,12 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 <wire x1="152.4" y1="17.78" x2="134.62" y2="17.78" width="0.1524" layer="91"/>
 <junction x="134.62" y="17.78"/>
 </segment>
+<segment>
+<pinref part="BATTERY" gate="-1" pin="S"/>
+<pinref part="GND9" gate="1" pin="GND"/>
+<wire x1="116.84" y1="20.32" x2="114.3" y2="20.32" width="0.1524" layer="91"/>
+<wire x1="114.3" y1="20.32" x2="114.3" y2="12.7" width="0.1524" layer="91"/>
+</segment>
 </net>
 <net name="N$1" class="0">
 <segment>
@@ -16308,8 +16319,12 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 <segment>
 <pinref part="IC1" gate="A1" pin="VI"/>
 <pinref part="SUPPLY2" gate="G$1" pin="+9V"/>
-<wire x1="124.46" y1="30.48" x2="116.84" y2="30.48" width="0.1524" layer="91"/>
-<wire x1="116.84" y1="30.48" x2="116.84" y2="35.56" width="0.1524" layer="91"/>
+<wire x1="124.46" y1="30.48" x2="114.3" y2="30.48" width="0.1524" layer="91"/>
+<wire x1="114.3" y1="30.48" x2="114.3" y2="35.56" width="0.1524" layer="91"/>
+<pinref part="BATTERY" gate="-2" pin="S"/>
+<wire x1="116.84" y1="22.86" x2="114.3" y2="22.86" width="0.1524" layer="91"/>
+<wire x1="114.3" y1="22.86" x2="114.3" y2="30.48" width="0.1524" layer="91"/>
+<junction x="114.3" y="30.48"/>
 </segment>
 </net>
 <net name="N$18" class="0">

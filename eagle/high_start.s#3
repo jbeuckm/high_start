@@ -9191,8 +9191,8 @@ Source: www.kingbright.com</description>
 <instance part="I2C_3" gate="-2" x="58.42" y="106.68" rot="R90"/>
 <instance part="I2C_3" gate="-3" x="60.96" y="106.68" rot="R90"/>
 <instance part="I2C_3" gate="-4" x="63.5" y="106.68" rot="R90"/>
-<instance part="P+3" gate="1" x="22.86" y="96.52"/>
-<instance part="GND3" gate="1" x="71.12" y="96.52"/>
+<instance part="P+3" gate="1" x="22.86" y="104.14"/>
+<instance part="GND3" gate="1" x="71.12" y="88.9"/>
 <instance part="Q2" gate="G$1" x="109.22" y="93.98"/>
 <instance part="Q3" gate="G$1" x="109.22" y="81.28"/>
 <instance part="SUPPLY1" gate="G$1" x="116.84" y="106.68"/>
@@ -9296,6 +9296,7 @@ Source: www.kingbright.com</description>
 <wire x1="63.5" y1="93.98" x2="50.8" y2="93.98" width="0.1524" layer="91"/>
 <wire x1="50.8" y1="93.98" x2="38.1" y2="93.98" width="0.1524" layer="91"/>
 <wire x1="38.1" y1="93.98" x2="22.86" y2="93.98" width="0.1524" layer="91"/>
+<wire x1="22.86" y1="93.98" x2="22.86" y2="101.6" width="0.1524" layer="91"/>
 <wire x1="38.1" y1="104.14" x2="38.1" y2="93.98" width="0.1524" layer="91"/>
 <junction x="38.1" y="93.98"/>
 <pinref part="I2C_2" gate="-4" pin="S"/>
@@ -9377,6 +9378,7 @@ Source: www.kingbright.com</description>
 <wire x1="35.56" y1="99.06" x2="48.26" y2="99.06" width="0.1524" layer="91"/>
 <wire x1="48.26" y1="99.06" x2="60.96" y2="99.06" width="0.1524" layer="91"/>
 <wire x1="60.96" y1="99.06" x2="71.12" y2="99.06" width="0.1524" layer="91"/>
+<wire x1="71.12" y1="99.06" x2="71.12" y2="91.44" width="0.1524" layer="91"/>
 <pinref part="I2C_3" gate="-3" pin="S"/>
 <wire x1="60.96" y1="104.14" x2="60.96" y2="99.06" width="0.1524" layer="91"/>
 <junction x="60.96" y="99.06"/>
