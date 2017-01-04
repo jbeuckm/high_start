@@ -1744,7 +1744,7 @@ design rules under a new name.</description>
 <element name="C1" library="rcl" package="C025-040X050" value="27pF" x="43.18" y="10.16"/>
 <element name="C2" library="rcl" package="C025-040X050" value="27pF" x="48.26" y="10.16" rot="R180"/>
 <element name="C3" library="rcl" package="C025-030X050" value=".1uF" x="36.83" y="19.05"/>
-<element name="Q1" library="crystal" package="HC49/S" value="" x="45.72" y="17.78" rot="R180">
+<element name="Q1" library="crystal" package="HC49/S" value="16Mhz" x="45.72" y="17.78" rot="R180">
 <attribute name="OC_FARNELL" value="1667008" x="45.72" y="17.78" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MF" value="" x="45.72" y="17.78" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="OC_NEWARK" value="unknown" x="45.72" y="17.78" size="1.778" layer="27" rot="R180" display="off"/>
