@@ -1861,19 +1861,19 @@ design rules under a new name.</description>
 <element name="R2" library="rcl" package="0207/7" value="330" x="-71.12" y="-220.98"/>
 <element name="R3" library="rcl" package="0207/7" value="330" x="-71.12" y="-234.95"/>
 <element name="R4" library="rcl" package="0207/7" value="330" x="-71.12" y="-248.92"/>
-<element name="IGN1" library="con-molex" package="22-23-2021" value="22-23-2021" x="-72.39" y="-264.16">
+<element name="GPS_SPI1" library="con-molex" package="22-23-2021" value="22-23-2021" x="-72.39" y="-264.16">
 <attribute name="OC_NEWARK" value="25C3832" x="-72.39" y="-264.16" size="1.778" layer="27" display="off"/>
 <attribute name="MF" value="MOLEX" x="-72.39" y="-264.16" size="1.778" layer="27" display="off"/>
 <attribute name="MPN" value="22-23-2021" x="-72.39" y="-264.16" size="1.778" layer="27" display="off"/>
 <attribute name="OC_FARNELL" value="1462926" x="-72.39" y="-264.16" size="1.778" layer="27" display="off"/>
 </element>
-<element name="IGN2" library="con-molex" package="22-23-2021" value="22-23-2021" x="-72.39" y="-279.4">
+<element name="GPS_SPI2" library="con-molex" package="22-23-2021" value="22-23-2021" x="-72.39" y="-279.4">
 <attribute name="OC_NEWARK" value="25C3832" x="-72.39" y="-279.4" size="1.778" layer="27" display="off"/>
 <attribute name="MF" value="MOLEX" x="-72.39" y="-279.4" size="1.778" layer="27" display="off"/>
 <attribute name="MPN" value="22-23-2021" x="-72.39" y="-279.4" size="1.778" layer="27" display="off"/>
 <attribute name="OC_FARNELL" value="1462926" x="-72.39" y="-279.4" size="1.778" layer="27" display="off"/>
 </element>
-<element name="IGN3" library="con-molex" package="22-23-2021" value="22-23-2021" x="-72.39" y="-294.64">
+<element name="GPS_SPI3" library="con-molex" package="22-23-2021" value="22-23-2021" x="-72.39" y="-294.64">
 <attribute name="OC_NEWARK" value="25C3832" x="-72.39" y="-294.64" size="1.778" layer="27" display="off"/>
 <attribute name="MF" value="MOLEX" x="-72.39" y="-294.64" size="1.778" layer="27" display="off"/>
 <attribute name="MPN" value="22-23-2021" x="-72.39" y="-294.64" size="1.778" layer="27" display="off"/>
@@ -1986,9 +1986,9 @@ design rules under a new name.</description>
 <contactref element="SERVO1" pad="3"/>
 <contactref element="SERVO3" pad="3"/>
 <contactref element="SERVO2" pad="3"/>
-<contactref element="IGN1" pad="1"/>
-<contactref element="IGN3" pad="1"/>
-<contactref element="IGN2" pad="1"/>
+<contactref element="GPS_SPI1" pad="1"/>
+<contactref element="GPS_SPI3" pad="1"/>
+<contactref element="GPS_SPI2" pad="1"/>
 <wire x1="-68.58" y1="-190.5" x2="-68.58" y2="-175.26" width="0" layer="19" extent="1-1"/>
 <wire x1="-68.58" y1="-205.74" x2="-68.58" y2="-190.5" width="0" layer="19" extent="1-1"/>
 <wire x1="-73.66" y1="-264.16" x2="-68.58" y2="-205.74" width="0" layer="19" extent="1-1"/>
@@ -2128,21 +2128,21 @@ design rules under a new name.</description>
 <signal name="N$24">
 <contactref element="Q2" pad="3"/>
 <contactref element="R2" pad="2"/>
-<contactref element="IGN1" pad="2"/>
+<contactref element="GPS_SPI1" pad="2"/>
 <wire x1="-67.31" y1="-220.98" x2="-45.72" y2="-85.09" width="0" layer="19" extent="1-1"/>
 <wire x1="-71.12" y1="-264.16" x2="-67.31" y2="-220.98" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$25">
 <contactref element="Q3" pad="3"/>
 <contactref element="R3" pad="2"/>
-<contactref element="IGN2" pad="2"/>
+<contactref element="GPS_SPI2" pad="2"/>
 <wire x1="-67.31" y1="-234.95" x2="-68.58" y2="-85.09" width="0" layer="19" extent="1-1"/>
 <wire x1="-71.12" y1="-279.4" x2="-67.31" y2="-234.95" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$26">
 <contactref element="Q4" pad="3"/>
 <contactref element="R4" pad="2"/>
-<contactref element="IGN3" pad="2"/>
+<contactref element="GPS_SPI3" pad="2"/>
 <wire x1="-67.31" y1="-248.92" x2="-68.58" y2="-144.78" width="0" layer="19" extent="1-1"/>
 <wire x1="-71.12" y1="-294.64" x2="-67.31" y2="-248.92" width="0" layer="19" extent="1-1"/>
 </signal>

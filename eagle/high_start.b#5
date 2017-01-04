@@ -1564,30 +1564,6 @@ diameter 2 mm, horizontal, grid 7.62 mm</description>
 </package>
 </packages>
 </library>
-<library name="led">
-<description>&lt;b&gt;LEDs&lt;/b&gt;&lt;p&gt;
-&lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;&lt;br&gt;
-Extended by Federico Battaglin &lt;author&gt;&amp;lt;federico.rd@fdpinternational.com&amp;gt;&lt;/author&gt; with DUOLED</description>
-<packages>
-<package name="LED5MM">
-<description>&lt;B&gt;LED&lt;/B&gt;&lt;p&gt;
-5 mm, round</description>
-<wire x1="2.54" y1="-1.905" x2="2.54" y2="1.905" width="0.2032" layer="21"/>
-<wire x1="2.54" y1="-1.905" x2="2.54" y2="1.905" width="0.254" layer="21" curve="-286.260205"/>
-<wire x1="-1.143" y1="0" x2="0" y2="1.143" width="0.1524" layer="51" curve="-90"/>
-<wire x1="0" y1="-1.143" x2="1.143" y2="0" width="0.1524" layer="51" curve="90"/>
-<wire x1="-1.651" y1="0" x2="0" y2="1.651" width="0.1524" layer="51" curve="-90"/>
-<wire x1="0" y1="-1.651" x2="1.651" y2="0" width="0.1524" layer="51" curve="90"/>
-<wire x1="-2.159" y1="0" x2="0" y2="2.159" width="0.1524" layer="51" curve="-90"/>
-<wire x1="0" y1="-2.159" x2="2.159" y2="0" width="0.1524" layer="51" curve="90"/>
-<circle x="0" y="0" radius="2.54" width="0.1524" layer="21"/>
-<pad name="A" x="-1.27" y="0" drill="0.8128" shape="octagon"/>
-<pad name="K" x="1.27" y="0" drill="0.8128" shape="octagon"/>
-<text x="3.175" y="0.5334" size="1.27" layer="25" ratio="10">&gt;NAME</text>
-<text x="3.2004" y="-1.8034" size="1.27" layer="27" ratio="10">&gt;VALUE</text>
-</package>
-</packages>
-</library>
 </libraries>
 <attributes>
 </attributes>
@@ -1858,30 +1834,6 @@ design rules under a new name.</description>
 <attribute name="MPN" value="22-23-2031" x="-71.12" y="-205.74" size="1.778" layer="27" display="off"/>
 <attribute name="OC_FARNELL" value="1462950" x="-71.12" y="-205.74" size="1.778" layer="27" display="off"/>
 </element>
-<element name="R2" library="rcl" package="0207/7" value="330" x="-71.12" y="-220.98"/>
-<element name="R3" library="rcl" package="0207/7" value="330" x="-71.12" y="-234.95"/>
-<element name="R4" library="rcl" package="0207/7" value="330" x="-71.12" y="-248.92"/>
-<element name="IGN1" library="con-molex" package="22-23-2021" value="22-23-2021" x="-72.39" y="-264.16">
-<attribute name="OC_NEWARK" value="25C3832" x="-72.39" y="-264.16" size="1.778" layer="27" display="off"/>
-<attribute name="MF" value="MOLEX" x="-72.39" y="-264.16" size="1.778" layer="27" display="off"/>
-<attribute name="MPN" value="22-23-2021" x="-72.39" y="-264.16" size="1.778" layer="27" display="off"/>
-<attribute name="OC_FARNELL" value="1462926" x="-72.39" y="-264.16" size="1.778" layer="27" display="off"/>
-</element>
-<element name="IGN2" library="con-molex" package="22-23-2021" value="22-23-2021" x="-72.39" y="-279.4">
-<attribute name="OC_NEWARK" value="25C3832" x="-72.39" y="-279.4" size="1.778" layer="27" display="off"/>
-<attribute name="MF" value="MOLEX" x="-72.39" y="-279.4" size="1.778" layer="27" display="off"/>
-<attribute name="MPN" value="22-23-2021" x="-72.39" y="-279.4" size="1.778" layer="27" display="off"/>
-<attribute name="OC_FARNELL" value="1462926" x="-72.39" y="-279.4" size="1.778" layer="27" display="off"/>
-</element>
-<element name="IGN3" library="con-molex" package="22-23-2021" value="22-23-2021" x="-72.39" y="-294.64">
-<attribute name="OC_NEWARK" value="25C3832" x="-72.39" y="-294.64" size="1.778" layer="27" display="off"/>
-<attribute name="MF" value="MOLEX" x="-72.39" y="-294.64" size="1.778" layer="27" display="off"/>
-<attribute name="MPN" value="22-23-2021" x="-72.39" y="-294.64" size="1.778" layer="27" display="off"/>
-<attribute name="OC_FARNELL" value="1462926" x="-72.39" y="-294.64" size="1.778" layer="27" display="off"/>
-</element>
-<element name="LED1" library="led" package="LED5MM" value="" x="-73.66" y="-309.88"/>
-<element name="LED2" library="led" package="LED5MM" value="" x="-73.66" y="-323.85"/>
-<element name="LED3" library="led" package="LED5MM" value="" x="-73.66" y="-337.82"/>
 </elements>
 <signals>
 <signal name="N$4">
@@ -1925,12 +1877,6 @@ design rules under a new name.</description>
 <contactref element="X1" pad="4"/>
 <contactref element="X2" pad="4"/>
 <contactref element="X3" pad="4"/>
-<contactref element="SERVO3" pad="2"/>
-<contactref element="SERVO1" pad="2"/>
-<contactref element="SERVO2" pad="2"/>
-<wire x1="-71.12" y1="-190.5" x2="-71.12" y2="-175.26" width="0" layer="19" extent="1-1"/>
-<wire x1="-71.12" y1="-205.74" x2="-71.12" y2="-190.5" width="0" layer="19" extent="1-1"/>
-<wire x1="-21.59" y1="-86.36" x2="-71.12" y2="-175.26" width="0" layer="19" extent="1-1"/>
 <wire x1="-21.59" y1="-71.12" x2="-21.59" y2="-86.36" width="0" layer="19" extent="1-1"/>
 <wire x1="-21.59" y1="-55.88" x2="-21.59" y2="-71.12" width="0" layer="19" extent="1-1"/>
 <wire x1="-21.59" y1="-40.64" x2="-21.59" y2="-55.88" width="0" layer="19" extent="1-1"/>
@@ -1983,18 +1929,6 @@ design rules under a new name.</description>
 <contactref element="X4" pad="3"/>
 <contactref element="X3" pad="3"/>
 <contactref element="X2" pad="3"/>
-<contactref element="SERVO1" pad="3"/>
-<contactref element="SERVO3" pad="3"/>
-<contactref element="SERVO2" pad="3"/>
-<contactref element="IGN1" pad="1"/>
-<contactref element="IGN3" pad="1"/>
-<contactref element="IGN2" pad="1"/>
-<wire x1="-68.58" y1="-190.5" x2="-68.58" y2="-175.26" width="0" layer="19" extent="1-1"/>
-<wire x1="-68.58" y1="-205.74" x2="-68.58" y2="-190.5" width="0" layer="19" extent="1-1"/>
-<wire x1="-73.66" y1="-264.16" x2="-68.58" y2="-205.74" width="0" layer="19" extent="1-1"/>
-<wire x1="-73.66" y1="-279.4" x2="-73.66" y2="-264.16" width="0" layer="19" extent="1-1"/>
-<wire x1="-73.66" y1="-294.64" x2="-73.66" y2="-279.4" width="0" layer="19" extent="1-1"/>
-<wire x1="-24.13" y1="-86.36" x2="-68.58" y2="-175.26" width="0" layer="19" extent="1-1"/>
 <wire x1="-24.13" y1="-71.12" x2="-24.13" y2="-86.36" width="0" layer="19" extent="1-1"/>
 <wire x1="-24.13" y1="-55.88" x2="-24.13" y2="-71.12" width="0" layer="19" extent="1-1"/>
 <wire x1="-24.13" y1="-40.64" x2="-24.13" y2="-55.88" width="0" layer="19" extent="1-1"/>
@@ -2072,79 +2006,6 @@ design rules under a new name.</description>
 <contactref element="Q4" pad="1"/>
 <contactref element="D3" pad="C"/>
 <wire x1="-73.66" y1="-144.78" x2="-74.93" y2="-160.02" width="0" layer="19" extent="1-1"/>
-</signal>
-<signal name="N$15">
-<contactref element="U2" pad="5"/>
-<contactref element="SERVO1" pad="1"/>
-<wire x1="33.02" y1="22.86" x2="-73.66" y2="-175.26" width="0" layer="19" extent="1-1"/>
-</signal>
-<signal name="N$16">
-<contactref element="U2" pad="11"/>
-<contactref element="SERVO2" pad="1"/>
-<wire x1="-73.66" y1="-190.5" x2="48.26" y2="22.86" width="0" layer="19" extent="1-1"/>
-</signal>
-<signal name="N$17">
-<contactref element="SERVO3" pad="1"/>
-<contactref element="U2" pad="12"/>
-<wire x1="-73.66" y1="-205.74" x2="50.8" y2="22.86" width="0" layer="19" extent="1-1"/>
-</signal>
-<signal name="+9V">
-<contactref element="Q4" pad="2"/>
-<contactref element="Q3" pad="2"/>
-<contactref element="Q2" pad="2"/>
-<wire x1="-71.12" y1="-85.09" x2="-71.12" y2="-144.78" width="0" layer="19" extent="1-1"/>
-<wire x1="-48.26" y1="-85.09" x2="-71.12" y2="-85.09" width="0" layer="19" extent="1-1"/>
-</signal>
-<signal name="N$18">
-<contactref element="U2" pad="23"/>
-<contactref element="D1" pad="A"/>
-<wire x1="35.56" y1="30.48" x2="-67.31" y2="-101.6" width="0" layer="19" extent="1-1"/>
-</signal>
-<signal name="N$19">
-<contactref element="U2" pad="24"/>
-<contactref element="D2" pad="A"/>
-<wire x1="33.02" y1="30.48" x2="-67.31" y2="-115.57" width="0" layer="19" extent="1-1"/>
-</signal>
-<signal name="N$20">
-<contactref element="U2" pad="25"/>
-<contactref element="D3" pad="A"/>
-<wire x1="30.48" y1="30.48" x2="-67.31" y2="-160.02" width="0" layer="19" extent="1-1"/>
-</signal>
-<signal name="N$21">
-<contactref element="R2" pad="1"/>
-<contactref element="LED1" pad="A"/>
-<wire x1="-74.93" y1="-220.98" x2="-74.93" y2="-309.88" width="0" layer="19" extent="1-1"/>
-</signal>
-<signal name="N$22">
-<contactref element="R3" pad="1"/>
-<contactref element="LED2" pad="A"/>
-<wire x1="-74.93" y1="-234.95" x2="-74.93" y2="-323.85" width="0" layer="19" extent="1-1"/>
-</signal>
-<signal name="N$23">
-<contactref element="R4" pad="1"/>
-<contactref element="LED3" pad="A"/>
-<wire x1="-74.93" y1="-248.92" x2="-74.93" y2="-337.82" width="0" layer="19" extent="1-1"/>
-</signal>
-<signal name="N$24">
-<contactref element="Q2" pad="3"/>
-<contactref element="R2" pad="2"/>
-<contactref element="IGN1" pad="2"/>
-<wire x1="-67.31" y1="-220.98" x2="-45.72" y2="-85.09" width="0" layer="19" extent="1-1"/>
-<wire x1="-71.12" y1="-264.16" x2="-67.31" y2="-220.98" width="0" layer="19" extent="1-1"/>
-</signal>
-<signal name="N$25">
-<contactref element="Q3" pad="3"/>
-<contactref element="R3" pad="2"/>
-<contactref element="IGN2" pad="2"/>
-<wire x1="-67.31" y1="-234.95" x2="-68.58" y2="-85.09" width="0" layer="19" extent="1-1"/>
-<wire x1="-71.12" y1="-279.4" x2="-67.31" y2="-234.95" width="0" layer="19" extent="1-1"/>
-</signal>
-<signal name="N$26">
-<contactref element="Q4" pad="3"/>
-<contactref element="R4" pad="2"/>
-<contactref element="IGN3" pad="2"/>
-<wire x1="-67.31" y1="-248.92" x2="-68.58" y2="-144.78" width="0" layer="19" extent="1-1"/>
-<wire x1="-71.12" y1="-294.64" x2="-67.31" y2="-248.92" width="0" layer="19" extent="1-1"/>
 </signal>
 </signals>
 </board>
