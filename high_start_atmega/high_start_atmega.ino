@@ -18,8 +18,7 @@
 
 
 TinyGPS gps;
-SoftwareSerial gpsSerial(2,3);
-
+SoftwareSerial gpsSerial(2,4);
 
 Adafruit_BMP280 bmp;
   
@@ -31,6 +30,7 @@ int16_t gx, gy, gz;
 const int chipSelect = 13;
 File gyroDataFile, gpsDataFile;
 
+#define TAB_CHAR F("\t")
 
 void setupAccelGyro() {
   accelgyro.initialize();
@@ -136,12 +136,10 @@ void setup() {
   #elif I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_FASTWIRE
         Fastwire::setup(400, true);
   #endif
-/*
+
   if (!bmp.begin()) {  
-    Serial.println("Could not find a valid BMP280 sensor, check wiring!");
-    while (1);
+    Serial.println(F("Could not find a valid BMP280 sensor, check wiring!"));
   }
-*/
  
   setupAccelGyro();
 
@@ -154,15 +152,15 @@ void writeSDcardData() {
 
   String dataString = String(millis()) + "\t";
 
-  dataString += String(ax) + "\t"; 
-  dataString += String(ay) + "\t"; 
-  dataString += String(az) + "\t"; 
-  dataString += String(gx) + "\t"; 
+  dataString += String(ax) + TAB_CHAR;
+  dataString += String(ay) + TAB_CHAR;
+  dataString += String(az) + TAB_CHAR;
+  dataString += String(gx) + TAB_CHAR;
   
-  dataString += String(gy) + "\t"; 
-  dataString += String(gz) + "\t";
+  dataString += String(gy) + TAB_CHAR;
+  dataString += String(gz) + TAB_CHAR;
 
-  dataString += String(xOutput) + "\t";
+  dataString += String(xOutput) + TAB_CHAR;
   dataString += String(yOutput);
 
   gyroDataFile.println(dataString);
@@ -198,14 +196,13 @@ void checkGpsReady() {
   
   while (gpsSerial.available()) {
     int c = gpsSerial.read();
-    if (gps.encode(c))
-    {
+    if (gps.encode(c)) {
        
       gps.crack_datetime(&year, &month, &day, &hour, &minute, &second, &hundredths, &fix_age);
 
       setupSDcard();
       
-      Serial.println("GPS Fix");
+      Serial.println(F("GPS Fix"));
 
       mission_state = BOOST;
     }
@@ -225,9 +222,9 @@ void updateGPS() {
 
       gps.f_get_position(&flat, &flon, &fix_age);
 
-      String dataString = String(millis()) + "\t" + gps.satellites() + "\t";
+      String dataString = String(millis()) + TAB_CHAR + gps.satellites() + TAB_CHAR;
 
-      dataString += String(flat)+"\t"+String(flon)+"\t";
+      dataString += String(flat)+TAB_CHAR+String(flon)+TAB_CHAR;
       dataString += String(gps.f_altitude())+"\t"+String(gps.f_speed_mps());
       
       gpsDataFile.println(dataString);
@@ -250,6 +247,7 @@ void loop() {
       boost_loop();
       break;
     case COAST:
+      coast_loop();
       break;
     case DROGUE:
       break;
@@ -273,6 +271,18 @@ void boost_loop() {
   updateGPS();
 }
 
+
+void coast_loop() {
+/*  
+  Serial.print(F("Pressure = "));
+  Serial.print(bmp.readPressure());
+  Serial.println(F(" Pa"));
+
+  Serial.print(F("Approx altitude = "));
+  Serial.print(bmp.readAltitude(1013.25)); // this should be adjusted to your local forcase
+  Serial.println(F(" m"));
+*/
+}
 
 
 
