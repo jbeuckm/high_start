@@ -15990,6 +15990,11 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 <pinref part="C3" gate="G$1" pin="1"/>
 <wire x1="-25.4" y1="71.12" x2="-25.4" y2="76.2" width="0.1524" layer="91"/>
 <junction x="-25.4" y="76.2"/>
+<pinref part="U2" gate="G$1" pin="AREF"/>
+<wire x1="-7.62" y1="58.42" x2="-7.62" y2="63.5" width="0.1524" layer="91"/>
+<wire x1="-7.62" y1="63.5" x2="-12.7" y2="63.5" width="0.1524" layer="91"/>
+<wire x1="-12.7" y1="63.5" x2="-12.7" y2="66.04" width="0.1524" layer="91"/>
+<junction x="-12.7" y="66.04"/>
 </segment>
 <segment>
 <pinref part="SD_CARD" gate="-1" pin="S"/>

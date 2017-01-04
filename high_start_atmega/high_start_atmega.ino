@@ -45,8 +45,7 @@ void setupAccelGyro() {
 }
 
 
-Servo xServo;
-Servo yServo;
+Servo servo1, servo2, servo3;
 
 double xSetpoint, xInput, xOutput;
 PID xPID(&xInput, &xOutput, &xSetpoint, .05, 0, .01, DIRECT);
@@ -67,8 +66,9 @@ void setupServos() {
   yPID.SetOutputLimits(-90, 90);
   yPID.SetMode(AUTOMATIC);
   
-  xServo.attach(8);
-  yServo.attach(9);
+  servo1.attach(3);
+  servo2.attach(5);
+  servo3.attach(6);
 }
 
 
@@ -150,7 +150,7 @@ void setup() {
 
 void writeSDcardData() {
 
-  String dataString = String(millis()) + "\t";
+  String dataString = String(millis()) + TAB_CHAR;
 
   dataString += String(ax) + TAB_CHAR;
   dataString += String(ay) + TAB_CHAR;
@@ -172,12 +172,12 @@ void writeSDcardData() {
 void updateServos() {
   
   xInput = ax;
-  xPID.Compute();    
-  xServo.write(90 + xOutput);
+  xPID.Compute();
+//  xServo.write(90 + xOutput);
   
   yInput = ay;
-  yPID.Compute();    
-  yServo.write(90 + yOutput);
+  yPID.Compute();
+//  yServo.write(90 + yOutput);
   
 }
 
@@ -225,7 +225,7 @@ void updateGPS() {
       String dataString = String(millis()) + TAB_CHAR + gps.satellites() + TAB_CHAR;
 
       dataString += String(flat)+TAB_CHAR+String(flon)+TAB_CHAR;
-      dataString += String(gps.f_altitude())+"\t"+String(gps.f_speed_mps());
+      dataString += String(gps.f_altitude())+TAB_CHAR+String(gps.f_speed_mps());
       
       gpsDataFile.println(dataString);
       gpsDataFile.flush();
