@@ -5,7 +5,7 @@
 #include <avr/pgmspace.h>
 
 #include <PID_v1.h>
-#include "I2Cdev.h"
+//#include "I2Cdev.h"
 #include "MPU6050.h"
 #include <Servo.h>
 #include <SPI.h>
@@ -91,7 +91,7 @@ void setupSDcard() {
   if (!SD.begin(chipSelect)) {
     Serial.println(F("SD init failed"));
     // don't do anything more:
-    while (1) ;
+//    while (1) ;
   }
   Serial.println(F("SD initted"));
 
@@ -103,10 +103,10 @@ void setupSDcard() {
   if (!gyroDataFile) {
     Serial.print(F("error opening "));
     Serial.println(gyrosFilename);
-    while (1) ;
+//    while (1) ;
   }
 
-  gyroDataFile.println(F("millis\tax\tay\taz\tgx\tgy\tgz\txServo\tyServo"));
+  gyroDataFile.println(F("millis\tax\tay\taz\tgx\tgy\tgz\tservo1\tyservo2\tservo3"));
   
 
   String gpsFilename = F("gps.tsv");

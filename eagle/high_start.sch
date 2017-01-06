@@ -15838,7 +15838,6 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 <part name="LED1" library="led" deviceset="LED" device="5MM"/>
 <part name="LED2" library="led" deviceset="LED" device="5MM"/>
 <part name="LED3" library="led" deviceset="LED" device="5MM"/>
-<part name="GND5" library="supply1" deviceset="GND" device=""/>
 <part name="GND6" library="supply1" deviceset="GND" device=""/>
 <part name="GPS" library="con-molex" deviceset="22-23-2041" device=""/>
 <part name="P+5" library="supply1" deviceset="+5V" device=""/>
@@ -15912,16 +15911,15 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 <instance part="R2" gate="G$1" x="132.08" y="91.44" rot="R180"/>
 <instance part="R3" gate="G$1" x="132.08" y="78.74" rot="R180"/>
 <instance part="R4" gate="G$1" x="132.08" y="66.04" rot="R180"/>
-<instance part="IGN1" gate="-1" x="129.54" y="83.82" rot="MR180"/>
-<instance part="IGN1" gate="-2" x="129.54" y="86.36" rot="MR180"/>
-<instance part="IGN2" gate="-1" x="129.54" y="71.12" rot="MR180"/>
-<instance part="IGN2" gate="-2" x="129.54" y="73.66" rot="MR180"/>
-<instance part="IGN3" gate="-1" x="129.54" y="58.42" rot="MR180"/>
-<instance part="IGN3" gate="-2" x="129.54" y="60.96" rot="MR180"/>
+<instance part="IGN1" gate="-1" x="144.78" y="86.36" rot="MR0"/>
+<instance part="IGN1" gate="-2" x="124.46" y="86.36" rot="MR180"/>
+<instance part="IGN2" gate="-1" x="144.78" y="73.66" rot="MR0"/>
+<instance part="IGN2" gate="-2" x="124.46" y="73.66" rot="MR180"/>
+<instance part="IGN3" gate="-1" x="144.78" y="60.96" rot="MR0"/>
+<instance part="IGN3" gate="-2" x="124.46" y="60.96" rot="MR180"/>
 <instance part="LED1" gate="G$1" x="142.24" y="91.44" rot="R90"/>
 <instance part="LED2" gate="G$1" x="142.24" y="78.74" rot="R90"/>
 <instance part="LED3" gate="G$1" x="142.24" y="66.04" rot="R90"/>
-<instance part="GND5" gate="1" x="121.92" y="50.8"/>
 <instance part="GND6" gate="1" x="149.86" y="50.8"/>
 <instance part="GPS" gate="-1" x="55.88" y="55.88" rot="R90"/>
 <instance part="GPS" gate="-2" x="58.42" y="55.88" rot="R90"/>
@@ -16121,32 +16119,30 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 <junction x="86.36" y="33.02"/>
 </segment>
 <segment>
-<pinref part="IGN1" gate="-1" pin="S"/>
-<pinref part="GND5" gate="1" pin="GND"/>
-<wire x1="127" y1="83.82" x2="121.92" y2="83.82" width="0.1524" layer="91"/>
-<wire x1="121.92" y1="83.82" x2="121.92" y2="71.12" width="0.1524" layer="91"/>
-<pinref part="IGN3" gate="-1" pin="S"/>
-<wire x1="121.92" y1="71.12" x2="121.92" y2="58.42" width="0.1524" layer="91"/>
-<wire x1="121.92" y1="58.42" x2="121.92" y2="53.34" width="0.1524" layer="91"/>
-<wire x1="127" y1="58.42" x2="121.92" y2="58.42" width="0.1524" layer="91"/>
-<junction x="121.92" y="58.42"/>
-<pinref part="IGN2" gate="-1" pin="S"/>
-<wire x1="127" y1="71.12" x2="121.92" y2="71.12" width="0.1524" layer="91"/>
-<junction x="121.92" y="71.12"/>
-</segment>
-<segment>
 <pinref part="LED1" gate="G$1" pin="C"/>
 <pinref part="GND6" gate="1" pin="GND"/>
 <wire x1="147.32" y1="91.44" x2="149.86" y2="91.44" width="0.1524" layer="91"/>
-<wire x1="149.86" y1="91.44" x2="149.86" y2="78.74" width="0.1524" layer="91"/>
+<wire x1="149.86" y1="91.44" x2="149.86" y2="86.36" width="0.1524" layer="91"/>
 <pinref part="LED3" gate="G$1" pin="C"/>
-<wire x1="149.86" y1="78.74" x2="149.86" y2="66.04" width="0.1524" layer="91"/>
-<wire x1="149.86" y1="66.04" x2="149.86" y2="53.34" width="0.1524" layer="91"/>
+<wire x1="149.86" y1="86.36" x2="149.86" y2="78.74" width="0.1524" layer="91"/>
+<wire x1="149.86" y1="78.74" x2="149.86" y2="73.66" width="0.1524" layer="91"/>
+<wire x1="149.86" y1="73.66" x2="149.86" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="149.86" y1="66.04" x2="149.86" y2="60.96" width="0.1524" layer="91"/>
+<wire x1="149.86" y1="60.96" x2="149.86" y2="53.34" width="0.1524" layer="91"/>
 <wire x1="147.32" y1="66.04" x2="149.86" y2="66.04" width="0.1524" layer="91"/>
 <junction x="149.86" y="66.04"/>
 <pinref part="LED2" gate="G$1" pin="C"/>
 <wire x1="147.32" y1="78.74" x2="149.86" y2="78.74" width="0.1524" layer="91"/>
 <junction x="149.86" y="78.74"/>
+<pinref part="IGN1" gate="-1" pin="S"/>
+<wire x1="147.32" y1="86.36" x2="149.86" y2="86.36" width="0.1524" layer="91"/>
+<junction x="149.86" y="86.36"/>
+<pinref part="IGN2" gate="-1" pin="S"/>
+<wire x1="147.32" y1="73.66" x2="149.86" y2="73.66" width="0.1524" layer="91"/>
+<junction x="149.86" y="73.66"/>
+<pinref part="IGN3" gate="-1" pin="S"/>
+<wire x1="147.32" y1="60.96" x2="149.86" y2="60.96" width="0.1524" layer="91"/>
+<junction x="149.86" y="60.96"/>
 </segment>
 <segment>
 <pinref part="GND7" gate="1" pin="GND"/>
@@ -16387,36 +16383,33 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 <segment>
 <pinref part="Q2" gate="G$1" pin="S"/>
 <pinref part="R2" gate="G$1" pin="2"/>
-<wire x1="114.3" y1="91.44" x2="124.46" y2="91.44" width="0.1524" layer="91"/>
+<wire x1="114.3" y1="91.44" x2="121.92" y2="91.44" width="0.1524" layer="91"/>
 <pinref part="IGN1" gate="-2" pin="S"/>
-<wire x1="124.46" y1="91.44" x2="127" y2="91.44" width="0.1524" layer="91"/>
-<wire x1="127" y1="86.36" x2="124.46" y2="86.36" width="0.1524" layer="91"/>
-<wire x1="124.46" y1="86.36" x2="124.46" y2="91.44" width="0.1524" layer="91"/>
-<junction x="124.46" y="91.44"/>
+<wire x1="121.92" y1="91.44" x2="127" y2="91.44" width="0.1524" layer="91"/>
+<wire x1="121.92" y1="86.36" x2="121.92" y2="91.44" width="0.1524" layer="91"/>
+<junction x="121.92" y="91.44"/>
 </segment>
 </net>
 <net name="N$25" class="0">
 <segment>
 <pinref part="Q3" gate="G$1" pin="S"/>
 <pinref part="R3" gate="G$1" pin="2"/>
-<wire x1="114.3" y1="78.74" x2="124.46" y2="78.74" width="0.1524" layer="91"/>
+<wire x1="114.3" y1="78.74" x2="121.92" y2="78.74" width="0.1524" layer="91"/>
 <pinref part="IGN2" gate="-2" pin="S"/>
-<wire x1="124.46" y1="78.74" x2="127" y2="78.74" width="0.1524" layer="91"/>
-<wire x1="127" y1="73.66" x2="124.46" y2="73.66" width="0.1524" layer="91"/>
-<wire x1="124.46" y1="73.66" x2="124.46" y2="78.74" width="0.1524" layer="91"/>
-<junction x="124.46" y="78.74"/>
+<wire x1="121.92" y1="78.74" x2="127" y2="78.74" width="0.1524" layer="91"/>
+<wire x1="121.92" y1="73.66" x2="121.92" y2="78.74" width="0.1524" layer="91"/>
+<junction x="121.92" y="78.74"/>
 </segment>
 </net>
 <net name="N$26" class="0">
 <segment>
 <pinref part="Q4" gate="G$1" pin="S"/>
 <pinref part="R4" gate="G$1" pin="2"/>
-<wire x1="114.3" y1="66.04" x2="124.46" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="114.3" y1="66.04" x2="121.92" y2="66.04" width="0.1524" layer="91"/>
 <pinref part="IGN3" gate="-2" pin="S"/>
-<wire x1="124.46" y1="66.04" x2="127" y2="66.04" width="0.1524" layer="91"/>
-<wire x1="127" y1="60.96" x2="124.46" y2="60.96" width="0.1524" layer="91"/>
-<wire x1="124.46" y1="60.96" x2="124.46" y2="66.04" width="0.1524" layer="91"/>
-<junction x="124.46" y="66.04"/>
+<wire x1="121.92" y1="66.04" x2="127" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="121.92" y1="60.96" x2="121.92" y2="66.04" width="0.1524" layer="91"/>
+<junction x="121.92" y="66.04"/>
 </segment>
 </net>
 </nets>

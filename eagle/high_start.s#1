@@ -15894,10 +15894,10 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 <instance part="Q2" gate="G$1" x="109.22" y="93.98"/>
 <instance part="Q3" gate="G$1" x="109.22" y="81.28"/>
 <instance part="SUPPLY1" gate="G$1" x="116.84" y="101.6"/>
-<instance part="D1" gate="G$1" x="101.6" y="91.44"/>
-<instance part="D2" gate="G$1" x="101.6" y="78.74"/>
+<instance part="D1" gate="G$1" x="99.06" y="91.44"/>
+<instance part="D2" gate="G$1" x="99.06" y="78.74"/>
 <instance part="Q4" gate="G$1" x="109.22" y="68.58"/>
-<instance part="D3" gate="G$1" x="101.6" y="66.04"/>
+<instance part="D3" gate="G$1" x="99.06" y="66.04"/>
 <instance part="SERVO1" gate="-1" x="93.98" y="50.8"/>
 <instance part="SERVO1" gate="-2" x="93.98" y="48.26"/>
 <instance part="SERVO1" gate="-3" x="93.98" y="45.72"/>
@@ -16267,18 +16267,21 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 <segment>
 <pinref part="Q3" gate="G$1" pin="G"/>
 <pinref part="D2" gate="G$1" pin="C"/>
+<wire x1="101.6" y1="78.74" x2="104.14" y2="78.74" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$13" class="0">
 <segment>
 <pinref part="Q2" gate="G$1" pin="G"/>
 <pinref part="D1" gate="G$1" pin="C"/>
+<wire x1="101.6" y1="91.44" x2="104.14" y2="91.44" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$14" class="0">
 <segment>
 <pinref part="Q4" gate="G$1" pin="G"/>
 <pinref part="D3" gate="G$1" pin="C"/>
+<wire x1="101.6" y1="66.04" x2="104.14" y2="66.04" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$15" class="0">
@@ -16338,7 +16341,7 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 <wire x1="40.64" y1="73.66" x2="83.82" y2="73.66" width="0.1524" layer="91"/>
 <wire x1="83.82" y1="73.66" x2="83.82" y2="91.44" width="0.1524" layer="91"/>
 <pinref part="D1" gate="G$1" pin="A"/>
-<wire x1="83.82" y1="91.44" x2="99.06" y2="91.44" width="0.1524" layer="91"/>
+<wire x1="83.82" y1="91.44" x2="96.52" y2="91.44" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$19" class="0">
@@ -16347,16 +16350,16 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 <wire x1="40.64" y1="71.12" x2="88.9" y2="71.12" width="0.1524" layer="91"/>
 <wire x1="88.9" y1="71.12" x2="88.9" y2="78.74" width="0.1524" layer="91"/>
 <pinref part="D2" gate="G$1" pin="A"/>
-<wire x1="88.9" y1="78.74" x2="99.06" y2="78.74" width="0.1524" layer="91"/>
+<wire x1="88.9" y1="78.74" x2="96.52" y2="78.74" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$20" class="0">
 <segment>
 <pinref part="U2" gate="G$1" pin="PC2(ADC2)"/>
-<wire x1="40.64" y1="68.58" x2="93.98" y2="68.58" width="0.1524" layer="91"/>
-<wire x1="93.98" y1="68.58" x2="93.98" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="40.64" y1="68.58" x2="88.9" y2="68.58" width="0.1524" layer="91"/>
+<wire x1="88.9" y1="68.58" x2="88.9" y2="66.04" width="0.1524" layer="91"/>
 <pinref part="D3" gate="G$1" pin="A"/>
-<wire x1="93.98" y1="66.04" x2="99.06" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="88.9" y1="66.04" x2="96.52" y2="66.04" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$21" class="0">
