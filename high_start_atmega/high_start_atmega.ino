@@ -27,7 +27,7 @@ MPU6050 accelgyro;
 int16_t ax, ay, az;
 int16_t gx, gy, gz;
 
-const int chipSelect = 13;
+const int chipSelect = 8;
 File gyroDataFile, gpsDataFile;
 
 #define TAB_CHAR F("\t")
@@ -120,10 +120,45 @@ void setupSDcard() {
     while (1) ;
   }
 
+  gpsDataFile.println(F("hello from avionics board!"));
   gpsDataFile.println(F("millis\tsatellites\tlat\tlon\taltitude\tspeed"));
   
 }
 
+enum MISSION_STATE {
+  WAIT_FOR_FIX,
+  BOOST,
+  COAST,
+  DROGUE,
+  RECOVERY,
+  LANDED
+};
+
+MISSION_STATE mission_state = WAIT_FOR_FIX;
+
+
+void testSD() {
+  pinMode(SS, OUTPUT);
+  
+  if (!SD.begin(chipSelect)) {
+    Serial.println(F("SD init failed"));
+    // don't do anything more:
+//    while (1) ;
+  }
+  Serial.println(F("SD initted"));
+  String gpsFilename = F("hello.txt");
+  
+//  SdFile::dateTimeCallback(dateTime);
+  gpsDataFile = SD.open(gpsFilename, O_WRITE | O_CREAT | O_TRUNC);
+
+  if (!gpsDataFile) {
+    Serial.print(F("error opening "));
+    Serial.println(gpsFilename);
+    while (1) ;
+  }
+
+  gpsDataFile.println(F("hello from avionics board!"));
+}
 
 void setup() {
 
@@ -144,6 +179,8 @@ void setup() {
   setupAccelGyro();
 
   setupServos();
+
+  testSD();
 }
 
 
@@ -181,16 +218,6 @@ void updateServos() {
   
 }
 
-enum MISSION_STATE {
-  WAIT_FOR_FIX,
-  BOOST,
-  COAST,
-  DROGUE,
-  RECOVERY,
-  LANDED
-};
-
-MISSION_STATE mission_state = WAIT_FOR_FIX;
 
 void checkGpsReady() {
   
