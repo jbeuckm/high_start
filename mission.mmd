@@ -1,0 +1,5 @@
+graph TB
+	wait[Wait for GPS Lock]-->countdown[Countdown]
+	countdown-->confirm[Altitude >= 80,000ft?]
+	confirm-->|Yes| ignite[Ignition]
+	confirm -->|No| confirm
