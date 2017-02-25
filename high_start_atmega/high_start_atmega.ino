@@ -137,30 +137,20 @@ enum MISSION_STATE {
 MISSION_STATE mission_state = WAIT_FOR_FIX;
 
 
-void testSD() {
-  pinMode(SS, OUTPUT);
-  
-  if (!SD.begin(chipSelect)) {
-    Serial.println(F("SD init failed"));
-    // don't do anything more:
-//    while (1) ;
-  }
-  Serial.println(F("SD initted"));
-  String gpsFilename = F("hello.txt");
-  
-//  SdFile::dateTimeCallback(dateTime);
-  gpsDataFile = SD.open(gpsFilename, O_WRITE | O_CREAT | O_TRUNC);
-
-  if (!gpsDataFile) {
-    Serial.print(F("error opening "));
-    Serial.println(gpsFilename);
-    while (1) ;
-  }
-
-  gpsDataFile.println(F("hello from avionics board!"));
-}
+#define IGNITER_1 A2
+#define IGNITER_2 A1
+#define IGNITER_3 A0
 
 void setup() {
+
+  pinMode(IGNITER_1, OUTPUT);
+  pinMode(IGNITER_2, OUTPUT);
+  pinMode(IGNITER_3, OUTPUT);
+  pinMode(13, OUTPUT);
+    digitalWrite(IGNITER_1, LOW);
+    digitalWrite(IGNITER_2, LOW);
+    digitalWrite(IGNITER_3, LOW);
+    digitalWrite(13, LOW);
 
   Serial.begin(115200);
   gpsSerial.begin(9600);
@@ -180,7 +170,6 @@ void setup() {
 
   setupServos();
 
-  testSD();
 }
 
 
@@ -264,7 +253,16 @@ void updateGPS() {
 }
 
 
+
 void loop() {
+
+delay(3000);
+
+    Serial.println(F("Fire in the hole."));
+    digitalWrite(IGNITER_1, HIGH);
+    digitalWrite(IGNITER_2, HIGH);
+    digitalWrite(IGNITER_3, HIGH);
+    digitalWrite(13, HIGH);
 
   switch (mission_state) {
     case WAIT_FOR_FIX:
