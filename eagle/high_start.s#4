@@ -15716,7 +15716,7 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 <part name="R9" library="rcl" deviceset="R-US_" device="0207/2V" value="10k"/>
 <part name="R10" library="rcl" deviceset="R-US_" device="0207/2V" value="10k"/>
 <part name="GND5" library="supply1" deviceset="GND" device=""/>
-<part name="R5" library="rcl" deviceset="R-US_" device="0207/7" value="1k"/>
+<part name="R5" library="rcl" deviceset="R-US_" device="0207/7" value="220"/>
 </parts>
 <sheets>
 <sheet>

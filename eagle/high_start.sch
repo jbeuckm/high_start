@@ -15712,9 +15712,9 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 <part name="GND8" library="supply1" deviceset="GND" device=""/>
 <part name="BATTERY" library="con-molex" deviceset="22-23-2021" device=""/>
 <part name="GND9" library="supply1" deviceset="GND" device=""/>
-<part name="R6" library="rcl" deviceset="R-US_" device="0207/7" value="10k"/>
-<part name="R9" library="rcl" deviceset="R-US_" device="0207/7" value="10k"/>
-<part name="R10" library="rcl" deviceset="R-US_" device="0207/7" value="10k"/>
+<part name="R6" library="rcl" deviceset="R-US_" device="0207/5V" value="10k"/>
+<part name="R9" library="rcl" deviceset="R-US_" device="0207/5V" value="10k"/>
+<part name="R10" library="rcl" deviceset="R-US_" device="0207/5V" value="10k"/>
 <part name="GND5" library="supply1" deviceset="GND" device=""/>
 <part name="R5" library="rcl" deviceset="R-US_" device="0207/7" value="220"/>
 <part name="R7" library="rcl" deviceset="R-US_" device="0207/7" value="220"/>
